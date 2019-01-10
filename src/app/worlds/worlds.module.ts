@@ -6,14 +6,16 @@ import{RouterModule, Routes}  from '@angular/router';
 import { EditComponent } from './edit/edit.component';
 
 import { FormsModule } from '@angular/forms';
+import { ViewComponent } from './view/view.component';
 
 const routes: Routes = [
   {path: '', component: IndexComponent},
-  {path: 'edit', component: EditComponent},
+  {path: 'edit/:id', component: EditComponent},
+  {path: 'view/:id', component: ViewComponent},
 ];
 
 @NgModule({
-  declarations: [IndexComponent, EditComponent],
+  declarations: [IndexComponent, EditComponent, ViewComponent],
   imports: [
     CommonModule,
     FormsModule,

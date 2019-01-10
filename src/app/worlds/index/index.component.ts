@@ -12,8 +12,11 @@ import { MockWorlds } from '../../mockupData/mockWorlds';
 export class IndexComponent implements OnInit {
 
   world : World = {
-    id    : 0,
-    name  : '',
+    id      : 0,
+    name    : '',
+    short   : '',
+    desc    : '',
+    edition : '',
   }
 
   worldList = MockWorlds;
@@ -23,4 +26,13 @@ export class IndexComponent implements OnInit {
   ngOnInit() {
   }
 
+  delete(id : number){
+
+    let worldKey : number = this.worldList.findIndex(x => x.id === id);
+
+    let arrayStart  : Array<World> = this.worldList.slice(0, worldKey);
+    let arrayEnd    : Array<World> = this.worldList.slice(worldKey + 1);
+
+    this.worldList = arrayStart.concat(arrayEnd);
+  }
 }

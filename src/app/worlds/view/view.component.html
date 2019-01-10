@@ -1,0 +1,41 @@
+<style>
+  .form-control{
+    display: inline;
+  }
+</style>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="container">
+          <div class="row text-left">
+            <div class="col-sm-5">
+              <label class="col-sm-4 pl-0">Worldname</label>
+              <input type="text" class="col-sm-8 form-control pr-0" name="name" [(ngModel)]="world.name" readonly>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5">
+              <label class="col-sm-4 pl-0">Contraction</label>
+              <input type="text" class="col-sm-8 form-control" name="short" [(ngModel)]="world.short" readonly>
+            </div>
+          </div>
+          <div class="row py-3 text-left">
+            <div class="col-sm-5">
+              <label class="col-sm-4 pl-0">Edition</label>
+              <input type="text" class="col-sm-8 form-control" name="edition" [(ngModel)]="world.edition" readonly>
+            </div>
+          </div>
+          <div class="row py-3 text-left">
+            <div class="col-sm-12">
+                <label class="col-sm-1 pl-0 mr-5">Description</label>
+                <textarea class="col-sm-12 form-control" rows="10" name="desc" [(ngModel)]="world.desc" readonly></textarea>
+            </div>
+          </div>
+          <div class="row py-5">
+            <div class="col-sm-12 pb-3">
+              <button type="button" routerLink="../../" class="btn btn-danger">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

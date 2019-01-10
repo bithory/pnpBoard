@@ -6,8 +6,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
 import {FormsModule} from '@angular/forms';
-
+import {RouterModule, Routes} from "@angular/router";
 import {WorldsModule} from './worlds/worlds.module';
+import { IndexComponent } from './game-group/index/index.component';
+
+const routes : Routes = [
+  {path: '', component: IndexComponent},
+  //{path: 'edit', component: EditC}
+];
 
 @NgModule({
   declarations: [
