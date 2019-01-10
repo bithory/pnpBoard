@@ -10,6 +10,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {WorldsModule} from './worlds/worlds.module';
 import { IndexComponent } from './game-group/index/index.component';
 
+import { NavbarHorizontalComponent } from './navigation/navbar-horizontal/navbar-horizontal.component';
+
 const routes : Routes = [
   {path: '', component: IndexComponent},
   //{path: 'edit', component: EditC}
@@ -19,6 +21,7 @@ const routes : Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
+    NavbarHorizontalComponent,
   ],
   imports: [
     BrowserModule,
