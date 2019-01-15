@@ -1,0 +1,58 @@
+<style>
+  .no-block{
+    display : inline;
+  }
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="container">
+        <form #f="ngForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="row text-left">
+            <div class="col-sm-5 form-group">
+              <input type="hidden" name="id" [(ngModel)]="party.id">
+              <label class="col-sm-4 pl-0" >Party name</label>
+              <input type="text" class="col-sm-8 form-control no-block" name="name" [(ngModel)]="party.name">
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5 form-group">
+              <label class="col-sm-4 pl-0">World</label>
+              <select class="col-sm-8 form-control no-block" name="world" [(ngModel)]="party.world.id">
+                <option *ngFor="let world of worlds" [value]="world.id">{{world.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row py-3 text-left">
+            <div class="col-sm-5">
+              <label class="col-sm-4 pl-0">Sheet</label>
+              <select type="text" class="col-sm-8 form-control no-block" name="sheet" [(ngModel)]="party.sheet.id">
+                <option *ngFor="let sheet of sheets" [value]="sheet.id">{{sheet.name}}</option>
+              </select>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5">
+              <label class="col-sm-4 pl-0">Gamemaster</label>
+              <select class="col-sm-8 form-control no-block" name="gm" [(ngModel)]="party.gm.id">
+                <option *ngFor="let user of users" [value]="user.id">{{user.username}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row py-3 text-left">
+            <div class="col-sm-5">
+              <label class="col-sm-4 pl-0 align-top">Members</label>
+                <select class="col-sm-8 form-control no-block"  multiple (change)="memberChange()" [value]="f">
+                  <option  *ngFor="let user of users" value="user.id"> {{user.username}}</option>
+                </select>
+            </div>
+          </div>
+          <div class="row py-5">
+            <div class="col-sm-12 pb-3">
+              <button type="submit" class="btn btn-success mr-1">Save</button>
+              <button type="button" routerLink="../../" class="btn btn-danger">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
