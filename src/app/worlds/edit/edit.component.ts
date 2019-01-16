@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { World } from '../../models/world';
 import { MockWorlds } from '../../mockupData/mockWorlds';
 
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -21,7 +21,7 @@ export class EditComponent implements OnInit {
     edition : '',
   };
 
-  constructor(private route : ActivatedRoute) { }
+  constructor(private route : ActivatedRoute, private router : Router) { }
 
   ngOnInit() {
 
@@ -51,7 +51,7 @@ export class EditComponent implements OnInit {
       worldsArr[key] = this.data;
     }
 
-    window.location.href = './worlds/';
+    this.router.navigate(['./worlds']);
   }
 
 }

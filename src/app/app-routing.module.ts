@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   { path: 'worlds', loadChildren : './worlds/worlds.module#WorldsModule'},
   { path: 'parties', loadChildren : './parties/parties.module#PartiesModule'},
+  { path: 'notes', loadChildren : './notes/notes.module#NotesModule'},
   { path: '', component : LoginComponent},
 ];
 

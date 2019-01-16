@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Party } from '../../models/party';
+
+import { ToolsService } from '../../services/tools.service';
+
 import { MockParties } from '../../mockupData/mockParties';
 
 @Component({
@@ -13,7 +16,7 @@ export class IndexComponent implements OnInit {
   public parties  : Array<Party> = MockParties;
   public member   = '';
 
-  constructor() { }
+  constructor(private tools : ToolsService) { }
 
   ngOnInit() {
 
@@ -23,11 +26,8 @@ export class IndexComponent implements OnInit {
   delete(id : number){
 
     let partyKey : number = this.parties.findIndex(x => x.id === id);
-
-    let arrayStart  : Array<Party> = this.parties.slice(0, partyKey);
-    let arrayEnd    : Array<Party> = this.parties.slice(partyKey + 1);
-
-    this.parties = arrayStart.concat(arrayEnd);
+    
+    this.parties = this.tools.delSingleArrElem(partyKey, this.parties);
   }
 
 }
