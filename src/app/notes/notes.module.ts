@@ -7,8 +7,9 @@ import { EditComponent } from './edit/edit.component';
 import { FormsModule } from '@angular/forms';
 
 const routes : Routes = [
-  {path: ':partyId/:userId', component: IndexComponent},
-  {path: 'edit/:partyId/:userId', component: EditComponent},
+  {path: ':partyId', component: IndexComponent},
+  {path: 'edit/:mode/:partyId/:id', component: EditComponent},
+  {path: 'view/:mode/:partyId/:id', component: EditComponent},
 ];
 
 @NgModule({

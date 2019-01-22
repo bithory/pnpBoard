@@ -19,19 +19,27 @@ import { MockSheets } from 'src/app/mockupData/mockSheets';
 })
 export class EditComponent implements OnInit {
 
-  public party  : Party;
+  //actual Mocked
+  //data lists
   public sheets : Array<Sheet>  = MockSheets;
   public users  : Array<User>   = MockUsers;
   public worlds : Array<World>  = MockWorlds;
 
+  //dynamic data lists - which stand in relation to other elements
   public userArr : Array<number>; //val for member
   public usersData: Array<User>;  //dataset for gm
 
+  //dynamic data which is binded to the html part
+  //will set to the party abbillities through the changes methods
+  public party  : Party;
   public worldId: number;
   public sheetId: number;
   public gmId   : number;
 
   public sheetsData : Array<Sheet>;
+
+  public isActField : boolean;
+  public hidden     : string;
 
   private param : number;
 
@@ -49,9 +57,11 @@ export class EditComponent implements OnInit {
     this.sheetsData = this.sheets;    
     this.userArr    = [];
 
-    this.param = parseInt(this.route.snapshot.paramMap.get('id'));
+    let id      = parseInt(this.route.snapshot.paramMap.get('id'));
+    let mode    = this.route.snapshot.paramMap.get('mode')
 
-    if(this.param === 0){
+    //divide between new or edit mode
+    if(mode == 'new'){
 
       this.party = {
         id    :   0,
@@ -64,7 +74,7 @@ export class EditComponent implements OnInit {
     }
     else{
 
-      this.party = this.parties.find(x => x.id === this.param);
+      this.party = this.parties.find(x => x.id === id);
 
       let userArr   : Array<number> = [];
 
@@ -74,6 +84,17 @@ export class EditComponent implements OnInit {
       });
 
       this.userArr = userArr;
+
+      if(mode === 'view'){
+
+        this.isActField = true;
+        this.hidden   = 'd-none';
+      }
+      else{
+
+        this.isActField = false;
+        this.hidden   = '';
+      }
     }
     
 

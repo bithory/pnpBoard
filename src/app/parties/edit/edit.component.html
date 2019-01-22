@@ -11,13 +11,13 @@
           <div class="row text-left">
             <div class="col-sm-5 form-group">
               <input type="hidden" name="id" [(ngModel)]="party.id">
-              <label class="col-sm-4 pl-0" >Party name</label>
-              <input type="text" class="col-sm-8 form-control no-block" name="name" [(ngModel)]="party.name">
+              <label for="party-name" class="col-sm-4 pl-0" >Party name</label>
+              <input id="party-name" type="text" class="col-sm-8 form-control no-block" name="name" [(ngModel)]="party.name" [readonly]="isActField">
             </div>
             <div class="col-sm-2"></div>
             <div class="col-sm-5 form-group">
               <label class="col-sm-4 pl-0">World</label>
-              <select class="col-sm-8 form-control no-block" name="world" (change)="worldChange()" [(ngModel)]="worldId">
+              <select class="col-sm-8 form-control no-block" name="world" (change)="worldChange()" [(ngModel)]="worldId" [disabled]="isActField">
                 <option *ngFor="let world of worlds" [value]="world.id">{{world.name}}</option>
               </select>
             </div>
@@ -25,14 +25,14 @@
           <div class="row py-3 text-left">
             <div class="col-sm-5">
               <label class="col-sm-4 pl-0">Sheet</label>
-              <select type="text" class="col-sm-8 form-control no-block" name="sheet" (change)="sheetChange()" [(ngModel)]="sheetId">
+              <select type="text" class="col-sm-8 form-control no-block" name="sheet" (change)="sheetChange()" [(ngModel)]="sheetId" [disabled]="isActField">
                 <option *ngFor="let sheet of sheetsData" [value]="sheet.id">{{sheet.name}}</option>
               </select>
             </div>
             <div class="col-sm-2"></div>
             <div class="col-sm-5">
               <label class="col-sm-4 pl-0">Gamemaster</label>
-              <select class="col-sm-8 form-control no-block" name="gm" (change)="gmChange()" [(ngModel)]="gmId">
+              <select class="col-sm-8 form-control no-block" name="gm" (change)="gmChange()" [(ngModel)]="gmId" [disabled]="isActField">
                 <option *ngFor="let user of usersData" [value]="user.id">{{user.username}}</option>
               </select>
             </div>
@@ -40,15 +40,15 @@
           <div class="row py-3 text-left">
             <div class="col-sm-5">
               <label class="col-sm-4 pl-0 align-top">Members</label>
-                <select class="col-sm-8 form-control no-block" (change)="memberChange()" name="members" [(ngModel)]="userArr" multiple>
+                <select class="col-sm-8 form-control no-block" (change)="memberChange()" name="members" [(ngModel)]="userArr" multiple [disabled]="isActField">
                   <option  *ngFor="let user of users" [value]="user.id"> {{user.username}}</option>
                 </select>
             </div>
           </div>
           <div class="row py-5">
             <div class="col-sm-12 pb-3">
-              <button type="submit" class="btn btn-success mr-1"><i class="far fa-save"></i> Save</button>
-              <button type="button" routerLink="../../" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button>
+              <button type="submit" class="btn btn-success mr-1 {{hidden}}" [disabled]="isActField"><i class="far fa-save"></i> Save</button>
+              <button type="button" routerLink="../../../" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button>
             </div>
           </div>
         </form>

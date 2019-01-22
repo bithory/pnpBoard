@@ -5,7 +5,7 @@ export const MockWorlds : World[] = [
     {
         id      : 1, 
         name    : 'Werwolf the Apocalypse', 
-        short   : '', 
+        short   : 'WtA', 
         desc    : 'I am a WoD description', 
         edition : 'W20'},
     {

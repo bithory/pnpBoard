@@ -22,8 +22,8 @@ export const MockParties : Party[] = [
         name    : 'Lunas happiness',
         world   : MockWorlds[0],
         users   : [
+            MockUsers[0], 
             MockUsers[1], 
-            MockUsers[2], 
             MockUsers[3], 
         ],
         gm      : MockUsers[1],

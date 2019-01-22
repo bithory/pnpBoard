@@ -1,3 +1,33 @@
-<p>
-  index works!
-</p>
+<div class="container pb-5">
+  <div class="row">
+    <div class="col-sm-12 bg-light shadow-sm text-left">
+      <button [routerLink]="['../edit', 'new', partyId, 0]" class="btn btn-primary my-2"><i class="fas fa-plus"></i> New</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row border-bottom bg-light py-3">
+    <div class="col-sm-3 text-left"><b>Name</b></div>
+    <div class="col-sm-5 text-left"><b>Tags</b></div>
+    <div class="col-sm-2 text-left"><b>Date</b></div>
+    <div class="col-sm-2 text-left"><b>Options</b></div>
+  </div>
+  <div class="row border-bottom py-1" *ngFor="let note of notes">
+    <div class="col-sm-3 text-left">
+      {{note.name}}
+    </div>
+    <div class="col-sm-5 text-left">
+      <span  class="badge badge-secondary mr-1" *ngFor="let tag of note.tags">
+        {{tag.name}}
+      </span>
+    </div>
+    <div class="col-sm-2 text-left">
+      {{note.date}}
+    </div>
+    <div class="col-sm-2 text-left">
+      <button type="button" [routerLink]="['/notes/view', 'view', note.partyId, note.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
+      <button type="button" [routerLink]="['/notes/edit', 'edit', note.partyId, note.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+      <button type="button" (click)="delete(note.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
+    </div>
+  </div>
+</div>
