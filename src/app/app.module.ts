@@ -8,7 +8,9 @@ import { LoginComponent } from './login/login.component';
 import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from "@angular/router";
 import {WorldsModule} from './worlds/worlds.module';
-import {IndexComponent} from './worlds/index/index.component'
+import {IndexComponent} from './worlds/index/index.component';
+
+import { HttpClientModule } from '@angular/common/http';
 
 import { NavbarHorizontalComponent } from './navigation/navbar-horizontal/navbar-horizontal.component';
 
@@ -27,6 +29,7 @@ const routes : Routes = [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

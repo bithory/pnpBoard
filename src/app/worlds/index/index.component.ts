@@ -3,6 +3,9 @@ import { World} from '../../models/world';
 
 import { MockWorlds } from '../../mockupData/mockWorlds';
 
+import { HttpService } from '../services/http.service';
+import { ToolsService } from '../../services/tools.service';
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -17,22 +20,37 @@ export class IndexComponent implements OnInit {
     short   : '',
     desc    : '',
     edition : '',
+    author  : 0,
   }
 
-  worldList = MockWorlds;
+  // worldList = MockWorlds;
+  worldList : Array<World>;
 
-  constructor() { }
+  constructor(private http : HttpService, private tools : ToolsService) { }
 
   ngOnInit() {
+
+    this.getData();
   }
 
-  delete(id : number){
+  private getData(){
 
-    let worldKey : number = this.worldList.findIndex(x => x.id === id);
+    this.http.getWorldList()
+    .subscribe(data => this.worldList = data);
+  }
 
-    let arrayStart  : Array<World> = this.worldList.slice(0, worldKey);
-    let arrayEnd    : Array<World> = this.worldList.slice(worldKey + 1);
+  public delete(id : number){
 
-    this.worldList = arrayStart.concat(arrayEnd);
+    let check : boolean = false
+    this.http.deleteWorld(id).subscribe(data => {
+      check = data;
+
+      this.getData();
+    });
+
+    // this.getData();
+    //um Volumen zu sparen wird die Liste vor Ort manipuliert und nicht neu geladen
+    // let key : number = this.worldList.findIndex( x => x.id === id);
+    // this.worldList = this.tools.delSingleArrElem(key, this.worldList);
   }
 }

@@ -4,4 +4,5 @@ export class World{
     short   : string;
     desc    : string;
     edition : string;
+    author  : number;
 }

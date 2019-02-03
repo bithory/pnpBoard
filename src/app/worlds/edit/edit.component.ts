@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { World } from '../../models/world';
 import { MockWorlds } from '../../mockupData/mockWorlds';
 
+import { HttpService } from '../services/http.service';
+
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -19,21 +21,26 @@ export class EditComponent implements OnInit {
     short   : '',
     desc    : '',
     edition : '',
+    author  : 1,
   };
 
-  constructor(private route : ActivatedRoute, private router : Router) { }
+  constructor(private route : ActivatedRoute, private router : Router, private http : HttpService) { }
 
   ngOnInit() {
 
     this.param = parseInt(this.route.snapshot.paramMap.get('id'));
 
-
+    //if: lädt Daten
+    //else: neues Dataset
     if(this.param !== 0){
 
-      this.data = MockWorlds.find(x => x.id == this.param);
+      this.getData();
     }
+  }
 
-    console.log(this.data);
+  private getData(){
+
+    this.http.getWorld(this.param).subscribe(data => this.data = data);
   }
 
   public onSubmit(){
@@ -42,13 +49,23 @@ export class EditComponent implements OnInit {
 
     if(this.data.id === 0){
 
-      worldsArr.push(this.data);
+      //Variante mit MockData
+      // worldsArr.push(this.data);
+
+
+      let check : boolean = false; //TODO: Dialogausgabe
+      this.http.addWorld(this.data).subscribe(data => check = data);
     }
     else{
 
-      let key : number = worldsArr.findIndex(x => x.id === this.data.id);
+      //Variante mit MockData
+      // let key : number = worldsArr.findIndex(x => x.id === this.data.id);
 
-      worldsArr[key] = this.data;
+      // worldsArr[key] = this.data;
+
+      //auf Datenbank
+      let check : boolean = false; //TODO: Dialogausgabe
+      this.http.editWorld(this.data).subscribe(data => check = data);
     }
 
     this.router.navigate(['./worlds']);
