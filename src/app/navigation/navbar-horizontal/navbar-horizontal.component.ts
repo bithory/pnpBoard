@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../services/http.service';
+
+import { Navigation } from '../../models/navigation';
 
 @Component({
   selector: 'app-navbar-horizontal',
@@ -7,10 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarHorizontalComponent implements OnInit {
 
+  private userId : number = 1;
+  
+  public navItems : Array<Navigation> = [];
 
-  constructor() { }
+  constructor(private http : HttpService) { }
 
   ngOnInit() {
+
+    this.getData();
   }
 
+  private getData(){
+
+    this.http.getNavigation(this.userId).subscribe(data => this.navItems = data);
+    
+    console.log(this.navItems);
+  }
 }

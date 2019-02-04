@@ -23,23 +23,19 @@
           <a class="dropdown-item" routerLink="./worlds">Worlds</a>
         </div>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" *ngFor="let item of navItems">
         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          WtA
+          {{item.short}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <span class="dropdown-item no-hover"><b>Grp 1</b></span>
-          <a class="dropdown-item" routerLink="./notes/1">Notes</a>
-          <a class="dropdown-item" href="#">Characters</a>
-          <span class="dropdown-item no-hover"><b>Grp 2</b></span>
-          <a class="dropdown-item" routerLink="./notes/2">Notes</a>
-          <a class="dropdown-item" href="#">Characters</a>
+          <div *ngFor="let party of item.party">
+              <span class="dropdown-item no-hover"><b>{{party.partyName}}</b></span>
+              <a class="dropdown-item" routerLink="./notes/{{party.partyId}}">Notes</a>
+              <a class="dropdown-item" href="#">Characters</a>
+          </div>
           <div class="dropdown-divider"></div>
-          <span class="dropdown-item text-muted no-hover">Werwolf the Apocalypse</span>
+          <span class="dropdown-item text-muted no-hover">{{item.name}}</span>
         </div>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="">ITEM</a>
       </li>
     </ul>
     <div class="form-inline my-2 my-lg-0">
