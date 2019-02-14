@@ -23,16 +23,20 @@ export class IndexComponent implements OnInit {
   public notes  : Array<Note>;
   public tags   : Array<Tag>;
 
-  constructor(private route : ActivatedRoute, private tools : ToolsService) { }
+  constructor(private route : ActivatedRoute, private tools : ToolsService) {
 
-  ngOnInit() {
-    
+    //Um darauf zu reagieren wenn man von Gruppe a Notes zu Gruppe b Notes springt
+    //da sonst Index nicht neu angelegt wird
+    route.params.subscribe(val => {
+      
+      this.notes = [];
+      this.partyId = parseInt(this.route.snapshot.paramMap.get('partyId'));
 
-    this.notes = [];
-    this.partyId = parseInt(this.route.snapshot.paramMap.get('partyId'));
+      this.getData();
+    });
+   }
 
-    this.getData();
-  }
+  ngOnInit() {}
 
   private getData(){
     

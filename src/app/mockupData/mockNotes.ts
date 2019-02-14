@@ -18,7 +18,7 @@ export const MockNotes : Array<Note> = [
         userId  : 1,
         partyId : 1,
         read    : [2,3],
-        tags    : [MockTags[0], MockTags[1]],
+        tags    : [MockTags[1], MockTags[2]],
         date    : '18.01.2019',
     },
     {

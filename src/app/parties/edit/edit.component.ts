@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms'
+import { HttpService } from '../services/http.service';
 
 import { Party } from '../../models/party';
 import { User } from '../../models/user';
@@ -19,73 +20,56 @@ import { MockSheets } from 'src/app/mockupData/mockSheets';
 })
 export class EditComponent implements OnInit {
 
-  //actual Mocked
-  //data lists
-  public sheets : Array<Sheet>  = MockSheets;
-  public users  : Array<User>   = MockUsers;
-  public worlds : Array<World>  = MockWorlds;
+  //Select Templates
+  public sheetsList   : Array<Sheet>;
+  public usersList    : Array<User>;
+  public gmsList      : Array<User>;
+  public worldsList   : Array<World>;
 
-  //dynamic data lists - which stand in relation to other elements
-  public userArr : Array<number>; //val for member
-  public usersData: Array<User>;  //dataset for gm
+  //Data Object
+  public party : Party;
 
-  //dynamic data which is binded to the html part
-  //will set to the party abbillities through the changes methods
-  public party  : Party;
-  public worldId: number;
-  public sheetId: number;
-  public gmId   : number;
+  //Data bindings
+  public worldId    : number;
+  public sheetId    : number;
+  public gmId       : number;
+  public membersId  : Array<Number>;
 
-  public sheetsData : Array<Sheet>;
-
+  //HTML options
   public isActField : boolean;
   public hidden     : string;
 
-  private param : number;
+  public world : World;
 
-  //Mocked data 
-  //TODO: change to real data
-  private parties : Array<Party> = MockParties;
+  private id    : number;
+  private mode  : string;
 
-  constructor(private route : ActivatedRoute, private router : Router) { }
+  constructor(private route : ActivatedRoute, private router : Router, private http : HttpService) { }
 
   ngOnInit() {
+
+    this.id     = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.mode    = this.route.snapshot.paramMap.get('mode')
+
+    this.getTemplates();
     
-    console.log(this.party);
+    this.party = {
+      id    :   0,
+      world :   MockWorlds[0],
+      name  :   '',
+      users :   MockUsers,
+      gm    :   MockUsers[0],
+      sheet :   MockSheets[0],
+    };
 
-    this.usersData  = this.users;
-    this.sheetsData = this.sheets;    
-    this.userArr    = [];
-
-    let id      = parseInt(this.route.snapshot.paramMap.get('id'));
-    let mode    = this.route.snapshot.paramMap.get('mode')
+    this.world = this.party.world;
 
     //divide between new or edit mode
-    if(mode == 'new'){
+    if(this.mode != 'new'){
 
-      this.party = {
-        id    :   0,
-        world :   MockWorlds[0],
-        name  :   '',
-        users :   MockUsers,
-        gm    :   MockUsers[0],
-        sheet :   MockSheets[0],
-      };
-    }
-    else{
+      this.getData();
 
-      this.party = this.parties.find(x => x.id === id);
-
-      let userArr   : Array<number> = [];
-
-      this.party.users.forEach(function(val){
-
-        userArr.push(val.id);
-      });
-
-      this.userArr = userArr;
-
-      if(mode === 'view'){
+      if(this.mode === 'view'){
 
         this.isActField = true;
         this.hidden   = 'd-none';
@@ -96,74 +80,127 @@ export class EditComponent implements OnInit {
         this.hidden   = '';
       }
     }
-    
+  }
 
-    this.worldId  = this.party.world.id;
-    this.sheetId  = this.party.sheet.id;
-    this.gmId     = this.party.gm.id;
+  private getData(){
+
+    this.http.getParty(this.id).subscribe(data =>{
+
+      this.party    = data;
+      this.gmsList  = data.users;      
+      this.sheetId  = data.sheet.id;
+      this.gmId     = data.gm.id;
+
+      let worldKey = this.worldsList.findIndex(x => x.id == data.world.id);
+      this.worldId = this.worldsList[worldKey].id;
+      
+
+      let members : Array<number> = [];
+      
+      data.users.forEach(function(value, index){
+
+        members[index] = value.id;
+      });
+
+      this.membersId = members;
+    });
+  }
+
+  private getTemplates(){
+
+    this.http.getUsersList(0).subscribe(data =>{
+
+      this.usersList  = data;
+    });
+    // this.http.getSheetsList(this.id).subscribe(data => this.sheetsList = data);
+    this.http.getWorldsList().subscribe(data => this.worldsList = data);
+
+    if(this.mode != 'new')
+      this.getSheetsList();
   }
 
   public gmChange(){
 
-    this.party.gm = this.users.find(x => x.id == this.gmId);
   }
 
-  public sheetChange(){
+  public getSheetsList(){
 
-    this.party.sheet = this.sheets.find(x => x.id == this.sheetId);
+    this.http.getSheetsList(this.worldId).subscribe(data => {
+
+      if(data[0] != null){
+        
+        this.sheetsList   = data;
+        this.party.sheet  = this.sheetsList[0];
+        this.sheetId      = this.party.sheet.id;
+      }
+      else{
+        
+        this.sheetsList   = [];
+        this.sheetId      = 0;
+      }
+
+
+      // console.log(this.sheetId);
+    });
   }
 
   public worldChange(){
 
-    this.party.world  = this.worlds.find(x => x.id == this.worldId);
+    // console.log(this.worldId);
 
-    let sheetArr  : Array<Sheet> = [];
-    let worldId   : number = this.worldId;
+    let key = this.worldsList.findIndex(x => x.id == this.worldId);
+    this.party.world = this.worldsList[key];
 
-    //find the shees which are related through the selected world
-    this.sheets.forEach(function(val){
+    this.getSheetsList();
+  }
 
-      if(val.worldId == worldId){
+  public sheetChange(){
 
-        console.log(val);
-        sheetArr.push(val);
-      }
-    });
-
-    this.sheetsData   = sheetArr;
-    this.party.sheet  = this.sheets.find(x => x.worldId == this.worldId);
-
-    //if needed reselect sheet
-    if(!this.sheetsData.find(x => x.id == this.sheetId))
-      this.sheetId = this.sheetsData[0].id;
+    let key           = this.sheetsList.findIndex(x => x.id == this.sheetId);
+    this.party.sheet  = this.sheetsList[key];
   }
 
   public memberChange(){
 
-    let party : Party       = this.party;
-    let users : Array<User> = MockUsers;
+    let member    : Array<User> = [];
+    let usersList : Array<User> = this.usersList;
+    let i : number = 0;
 
-    party.users = [];
+    console.log(this.usersList);
 
-    this.userArr.forEach(function(value){
+    this.membersId.forEach(function(value){
 
-      let key = users.findIndex(x => x.id === value);
-      party.users.push(users[key]);
+      let key : number = usersList.findIndex(x => x.id == value);
+      member[i++] = usersList[key];
     });
 
-    //set the values to party.users and overwrite userData
-    //which is used for the gamemaster. so that the gamemaster got
-    //only party member as selection optons
-    this.party.users  = party.users;
-    this.usersData    = party.users;
+    this.party.users  = member;
+    this.gmsList      = member;
 
-    //if needed reselect gm (gamemaster)
-    if(!this.usersData.find(x => x.id == this.gmId))
-      this.gmId = this.usersData[0].id;
+    let gmKey : number = this.gmsList.findIndex(x => x.id == this.gmId);
+
+    if(gmKey == -1){
+
+      this.gmId         = this.gmsList[0].id;
+      this.party.gm.id  = this.gmId;
+    }
   }
 
   public onSubmit(){
 
-    this.router.navigate(["./parties"]);
+    if(this.mode == 'new'){
+      
+      this.http.addParty(this.party).subscribe(data => {
+        
+        this.router.navigate(["./parties"]);
+      });
+    }
+    else{
+
+      this.http.editParty(this.party).subscribe(data =>{
+
+        this.router.navigate(['./parties']);
+      })
+    }
   }
 }

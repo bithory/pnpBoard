@@ -53,6 +53,8 @@ export class EditComponent implements OnInit {
     let tagArr  : Array<Tag>  = [];
     this.tags                 = MockTags;
 
+    console.log(this.tags);
+
     this.tags.forEach(function(val){
 
       if(val.partyId == partyId)

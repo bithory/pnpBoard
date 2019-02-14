@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { User } from '../../models/user';
 import { World } from '../../models/world';
+
 import { Observable } from 'rxjs';
+import { ToolsService } from '../../services/tools.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,24 +17,24 @@ export class HttpService {
   private action      : string = '&action=';
   private data        : string = '&data';
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private tools : ToolsService) { }
 
-  private objectToURLStr(obj : Object) : string{
+  // private objectToURLStr(obj : Object) : string{
  
-    let data  : string = this.data;
-    let param : string = '';
+  //   let data  : string = this.data;
+  //   let param : string = '';
 
-    let arr = Object.keys(obj).map(function(key) {
-      return [String(key), obj[key]];
-    });
+  //   let arr = Object.keys(obj).map(function(key) {
+  //     return [String(key), obj[key]];
+  //   });
 
-    arr.forEach(function(value){
+  //   arr.forEach(function(value){
 
-      param += data + '[' + value[0] + ']=' + encodeURIComponent(value[1]);
-    });
+  //     param += data + '[' + value[0] + ']=' + encodeURIComponent(value[1]);
+  //   });
 
-    return param;
-  }
+  //   return param;
+  // }
 
   public getWorldList(){
     
@@ -56,7 +58,8 @@ export class HttpService {
     let data    : string = this.data;
 
     //automatisches formatieren eines Objektes zu einem Array
-    param = this.objectToURLStr(world);
+    // param = this.objectToURLStr(world);
+    param = this.tools.objectToURLStr(world, this.data);
 
     return this.http.get<boolean>(this.url + this.module + action + param);
   }
@@ -67,7 +70,8 @@ export class HttpService {
      let param  : string = '';
      let data   : string = this.data;
 
-     param = this.objectToURLStr(world);
+    //  param = this.objectToURLStr(world);
+      param = this.tools.objectToURLStr(world, this.data);
 
      return this.http.get<boolean>(this.url + this.module + action + param);
   }

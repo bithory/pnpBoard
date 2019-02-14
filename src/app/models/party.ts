@@ -10,4 +10,4 @@ export class Party{
     users   : Array<User>;
     gm      : User;         //gm = gamemaster
     sheet   : Sheet;
-}
+}   

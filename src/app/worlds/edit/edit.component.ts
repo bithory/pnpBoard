@@ -54,7 +54,11 @@ export class EditComponent implements OnInit {
 
 
       let check : boolean = false; //TODO: Dialogausgabe
-      this.http.addWorld(this.data).subscribe(data => check = data);
+      this.http.addWorld(this.data).subscribe(data => {
+        
+        check = data;       
+        this.router.navigate(['./worlds']);
+      });
     }
     else{
 
@@ -65,10 +69,12 @@ export class EditComponent implements OnInit {
 
       //auf Datenbank
       let check : boolean = false; //TODO: Dialogausgabe
-      this.http.editWorld(this.data).subscribe(data => check = data);
+      this.http.editWorld(this.data).subscribe(data => { 
+        
+        check = data;        
+        this.router.navigate(['./worlds']);
+      });
     }
-
-    this.router.navigate(['./worlds']);
   }
 
 }
