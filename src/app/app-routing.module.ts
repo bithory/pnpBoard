@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: 'worlds', loadChildren : './worlds/worlds.module#WorldsModule'},
   { path: 'parties', loadChildren : './parties/parties.module#PartiesModule'},
   { path: 'notes', loadChildren : './notes/notes.module#NotesModule'},
+  { path: 'tags', loadChildren : './tags/tags.module#TagsModule'},
   { path: '', component : LoginComponent},
 ];
 
