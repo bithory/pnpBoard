@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpService } from '../services/http.service';
+import { NgForm } from '@angular/forms';
 
 import { Note } from '../../models/note';
 import { Tag } from '../../models/tag';
 import { User } from '../../models/user';
-import { Party } from '../../models/party';
-
-import { MockNotes } from '../../mockupData/mockNotes';
-import { MockUsers } from '../../mockupData/mockUsers';
-import { MockTags } from '../../mockupData/mockTags';
-import { MockParties } from '../../mockupData/mockParties';
 
 @Component({
   selector: 'app-edit',
@@ -19,66 +15,50 @@ import { MockParties } from '../../mockupData/mockParties';
 export class EditComponent implements OnInit {
 
   private userId  : number = 1;
+  private noteId  : number;
   public partyId : number;
 
   public notes  : Array<Note>;
   public tags   : Array<Tag>;
   public users  : Array<User>;
-  public parties: Array<Party>;
 
-  public readUsers : Array<number>;
-  
-  private party : Party;
+  public readData : Array<number>;
+  public tagData  : Array<number>;
 
   public isActField : boolean;
   public hidden     : string;
 
   public note : Note;
 
-  constructor(private route : ActivatedRoute, private router : Router) { }
+  constructor(private route : ActivatedRoute, private router : Router, private http : HttpService) { }
 
   ngOnInit() {
 
-    let id        : number  = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.noteId             = parseInt(this.route.snapshot.paramMap.get('id'));
     let mode      : string  = this.route.snapshot.paramMap.get('mode');
     this.partyId            = parseInt(this.route.snapshot.paramMap.get('partyId'));
-
-    this.notes  = MockNotes;
-    this.parties= MockParties;
-
-    this.party  = this.parties.find(x => x.id === this.partyId);
-    this.users  = this.party.users;
     
-    let partyId               = this.partyId;
-    let tagArr  : Array<Tag>  = [];
-    this.tags                 = MockTags;
+    let partyId             = this.partyId;
+    
+    this.tags   = [];
+    this.users  = [];
 
-    console.log(this.tags);
+    this.getTemplates();
 
-    this.tags.forEach(function(val){
+    this.note = {
+      id      : 0,
+      name    : '',
+      text    : '',
+      userId  : this.userId,
+      partyId : this.partyId,
+      read    : [],
+      tags    : [],
+      date    : '',
+    };
 
-      if(val.partyId == partyId)
-        tagArr.push(val);
-    });
+    if(mode !== 'new'){
 
-    this.tags = tagArr;
-
-    if(mode === 'new'){
-
-      this.note = {
-        id      : 0,
-        name    : '',
-        text    : '',
-        userId  : this.userId,
-        partyId : this.partyId,
-        read    : [],
-        tags    : [],
-        date    : '',
-      };      
-    }
-    else{
-
-      this.note = this.notes.find(x => x.id === id);
+      this.getData();
 
       if(mode === 'view'){
 
@@ -92,27 +72,90 @@ export class EditComponent implements OnInit {
       }
     }
     
-    let readTmp   : Array<number> = [];
-    let usersTmp  : Array<User>   = this.users;
+  }
 
-    this.note.read.forEach(function(val){
+  private getData() : void {
 
-      let currentUser = usersTmp.find(x => x.id == val);
-      readTmp.push(currentUser.id);
+    // this.http.getNote(this.noteId).subscribe(x => this.note = x);
+    
+    this.http.getNote(this.noteId).subscribe(data => {
+      this.note     = data;
+
+      let read : Array<number>  = [];
+      let tags : Array<number>  = [];
+
+      let readAuthor : boolean = false;
+
+      this.note.read.forEach(function(value, index){
+        
+        read[index] = value.id;
+
+        if(value.id == data.userId)
+          readAuthor = true;
+      });
+      
+      // if author is not on the read list than he would appended to the list
+      if(!readAuthor)
+        read.push(this.note.userId);
+
+      this.readData = read;
+
+      this.note.tags.forEach(function(value, index){
+
+        tags[index] = value.id;
+      });
+
+      this.tagData = tags;
+    });
+  }
+
+  private getTemplates() : void{
+
+    this.http.getParyUsersList(this.partyId).subscribe(x => this.users = x);
+    this.http.getNotesTagsList(this.partyId).subscribe(x => this.tags = x);
+  }
+
+  private onSubmit(f : NgForm){
+
+    // console.log(f);
+    //f.value.members
+    //f.value.noteTags    
+
+    let users     : Array<User> = this.users;
+    let readArr   : Array<User> = [];
+
+    let tags      : Array<Tag> = this.tags;
+    let tagArr    : Array<Tag> = [];
+
+    let indexUrl  : string = "./notes/";
+
+    f.value.members.forEach(function(value, index){
+
+      readArr[index] = users.find(x => x.id == value);
     });
 
-    this.readUsers = readTmp;
-  }
+    this.note.read = readArr;
 
-  public changeRead(){
+    f.value.noteTags.forEach(function(value, index){
 
-    console.log(this.readUsers);
-    this.note.read = this.readUsers;
-    console.log(this.note.read);
-  }
+      tagArr[index] = tags.find(x => x.id == value);
+    });
 
-  private onSubmit(){
+    this.note.tags = tagArr;
+    
+    if(this.note.id == 0){
 
-    this.router.navigate(["./notes/" + this.partyId]);
+      this.http.addNote(this.note).subscribe(x => {
+        
+        this.router.navigate([indexUrl + this.partyId]);
+      });
+    }
+    else{
+
+      this.http.editNote(this.note).subscribe(x => {
+        
+        this.router.navigate([indexUrl + this.partyId]);
+      });
+    }
   }
 }

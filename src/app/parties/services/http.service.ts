@@ -31,7 +31,7 @@ export class HttpService {
 
     let action  = this.action + 'load';
     let data    = this.param + '[id]=' + id;
-    console.log('HTTP: ' + action);
+    
     return this.http.get<Party>(this.url + this.module + action + data);
   }
 

@@ -7,34 +7,33 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="container">
-        <form #f="ngForm" (ngSubmit)="onSubmit()" novalidate>
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
           <div class="row text-left">
             <div class="col-sm-5 form-group">
-              <input type="hidden" name="id" [(ngModel)]="party.id">
               <label class="col-sm-4 pl-0 align-top">Tags</label>
-              <select class="col-sm-8 form-control no-block" name="tags" [(ngModel)]="note.tags" multiple [disabled]="isActField">
-                <option  *ngFor="let tag of tags" [value]="tag"> {{tag.name}}</option>
+              <select class="col-sm-8 form-control no-block" name="noteTags" [(ngModel)]="tagData" multiple [disabled]="isActField">
+                <option  *ngFor="let tag of tags" [value]="tag.id"> {{tag.name}}</option>
               </select>
             </div>
             <div class="col-sm-2"></div>
             <div class="col-sm-5 form-group">
               <label class="col-sm-4 pl-0 align-top">Can read</label>
-                <select class="col-sm-8 form-control no-block" name="members" (change)="changeRead()" [(ngModel)]="readUsers" multiple [disabled]="isActField">
+                <select class="col-sm-8 form-control no-block" name="members" [(ngModel)]="readData"  multiple [disabled]="isActField">
                   <option  *ngFor="let user of users" [value]="user.id"> {{user.username}}</option>
                 </select>
             </div>
           </div>
           <div class="row py-3 text-left">
             <div class="col-sm-12">              
-              <label for="party-name" class="col-sm-2 pl-0" >Party name</label>
+              <label for="party-name" class="col-sm-2 pl-0" >Name</label>
               <input id="party-name" type="text" class="col-sm-12 form-control no-block" name="name" [(ngModel)]="note.name" [readonly]="isActField">
             </div>
             <div class="col-sm-2"></div>
           </div>
           <div class="row py-3 text-left">
             <div class="col-sm-12">
-              <label class="col-sm-1 pl-0">Gamemaster</label>
-              <textarea class="col-sm-12 form-control no-block" rows="10" name="gm" [(ngModel)]="note.text" [disabled]="isActField">
+              <label class="col-sm-1 pl-0">Text</label>
+              <textarea class="col-sm-12 form-control no-block" rows="10" name="text" [(ngModel)]="note.text" [disabled]="isActField">
               </textarea>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { Tag } from './tag';
+import { User } from './User';
 
 export class Note{
 
@@ -7,7 +8,7 @@ export class Note{
     text    : string;
     userId  : number;
     partyId : number;
-    read    : Array<number>;
+    read    : Array<User>;
     tags    : Array<Tag>;
     date    : string;
 }

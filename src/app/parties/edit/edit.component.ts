@@ -85,7 +85,7 @@ export class EditComponent implements OnInit {
   private getData(){
 
     this.http.getParty(this.id).subscribe(data =>{
-
+      
       this.party    = data;
       this.gmsList  = data.users;      
       this.sheetId  = data.sheet.id;

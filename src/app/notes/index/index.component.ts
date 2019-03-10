@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToolsService } from '../../services/tools.service';
+import { HttpService } from '../services/http.service';
 
 import { Tag } from '../../models/tag';
 import { Note } from '../../models/note';
@@ -19,11 +20,12 @@ export class IndexComponent implements OnInit {
   //TODO: set to dynamical getting id
   private id      : number = 1;
   public partyId  : number;
+  private userId  : number = 1;
 
   public notes  : Array<Note>;
   public tags   : Array<Tag>;
 
-  constructor(private route : ActivatedRoute, private tools : ToolsService) {
+  constructor(private route : ActivatedRoute, private tools : ToolsService, private http : HttpService) {
 
     //Um darauf zu reagieren wenn man von Gruppe a Notes zu Gruppe b Notes springt
     //da sonst Index nicht neu angelegt wird
@@ -40,32 +42,14 @@ export class IndexComponent implements OnInit {
 
   private getData(){
     
-    let id        : number      = this.id;
-    let partyId   : number      = this.partyId;
-    let notesData : Array<Note> = [];
-    let tmpData   : Array<Note> = MockNotes;
-
-    tmpData.forEach(function(val){
-
-      if(val.userId === id)
-        notesData.push(val);
-    });
-
-    tmpData = [];
-
-    notesData.forEach(function(val){
-
-      if(val.partyId === partyId)
-        tmpData.push(val);
-    });
-
-    this.notes = tmpData;
+    this.http.getIndex(this.partyId, this.userId).subscribe(x => this.notes = x);
   }
 
   public delete(id : number){
 
-    let key     = this.notes.findIndex(x => x.id === id);
-    this.notes  = this.tools.delSingleArrElem(key, this.notes);
+    this.http.deleteNote(id).subscribe(x => {
+      this.getData();
+    })
   }
 
 }
