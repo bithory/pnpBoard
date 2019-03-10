@@ -6,7 +6,8 @@ import { Navigation } from '../../models/navigation';
 @Component({
   selector: 'app-navbar-horizontal',
   templateUrl: './navbar-horizontal.component.html',
-  styleUrls: ['./navbar-horizontal.component.css']
+  styleUrls: ['./navbar-horizontal.component.css'],
+  styles:['.no-hover:hover{background-color : #ffffff;}'],
 })
 export class NavbarHorizontalComponent implements OnInit {
 

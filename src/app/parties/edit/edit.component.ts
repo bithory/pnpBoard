@@ -16,7 +16,8 @@ import { MockSheets } from 'src/app/mockupData/mockSheets';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  styleUrls: ['./edit.component.css'],
+  styles:['.no-block{display : inline;}'],
 })
 export class EditComponent implements OnInit {
 
