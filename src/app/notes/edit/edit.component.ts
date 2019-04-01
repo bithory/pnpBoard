@@ -31,6 +31,16 @@ export class EditComponent implements OnInit {
 
   public note : Note;
 
+  public editor : string = '';
+  public editorTest : string = '';
+
+
+  quillConfig={
+    // toolbar: '.toolbar',
+    toolbar: true,
+    // theme: 'bubble',
+  }
+
   constructor(private route : ActivatedRoute, private router : Router, private http : HttpService) { }
 
   ngOnInit() {

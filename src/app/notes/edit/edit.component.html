@@ -18,20 +18,20 @@
                 </select>
             </div>
           </div>
-          <div class="row py-3 text-left">
+          <div class="row py-2 text-left">
             <div class="col-sm-12">              
               <label for="party-name" class="col-sm-2 pl-0" >Name</label>
               <input id="party-name" type="text" class="col-sm-12 form-control no-block" name="name" [(ngModel)]="note.name" [readonly]="isActField">
             </div>
             <div class="col-sm-2"></div>
           </div>
-          <div class="row py-3 text-left">
+          <div class="row py-2 text-left">
             <div class="col-sm-12">
-              <label class="col-sm-1 pl-0">Text</label>
-              <textarea class="col-sm-12 form-control no-block" rows="10" name="text" [(ngModel)]="note.text" [disabled]="isActField">
-              </textarea>
+              <label for="party-text" class="col-sm-1 pl-0">Text</label>
+              <quill-editor id="party-text" name="text" [(ngModel)]="note.text"  [modules]="quillConfig"></quill-editor>
             </div>
           </div>
+          <div class="row py-4"></div>
           <div class="row py-5">
             <div class="col-sm-12 pb-3">
               <button type="submit" class="btn btn-success mr-1 {{hidden}}" [disabled]="isActField"><i class="far fa-save"></i> Save</button>
