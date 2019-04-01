@@ -4,7 +4,7 @@ import { QuillModule } from 'ngx-quill'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { AccountModule } from './account/account.module';
 
 import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from "@angular/router";
@@ -23,7 +23,6 @@ const routes : Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     NavbarHorizontalComponent,
   ],
   imports: [

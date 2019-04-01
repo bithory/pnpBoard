@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { User} from '../models/user';
+import { User} from '../../models/user';
 import {NgForm} from '@angular/forms';
 
 //mockData
-import {MockUsers} from '../mockupData/mockUsers';
+import {MockUsers} from '../../mockupData/mockUsers';
 
 @Component({
   selector: 'app-login',

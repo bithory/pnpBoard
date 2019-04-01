@@ -6,14 +6,14 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-5 mx-auto">
-                <label>Username</label>
-                <input type="text" class="col-sm-12 {{inpBorder}}" name="usrname" ngModel/>
+                <label for="login-name">Username</label>
+                <input id="login-name" type="text" class="col-sm-12 form-control {{inpBorder}}" name="usrname" ngModel/>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-5 pt-2 mx-auto">
-                <label>Password</label>
-                <input type="password" class="col-sm-12 {{inpBorder}}" name="pw" ngModel/>
+                <label for="login-password">Password</label>
+                <input id="login-password" type="password" class="col-sm-12 form-control {{inpBorder}}" name="pw" ngModel/>
               </div>
             </div>
             <div class="row {{loginDialogClass}}">
@@ -23,7 +23,7 @@
             </div>
             <div class="row">
               <div class="col-sm-12 pt-5">
-                <button type="submit" class="col-sm-12 col-md-5 btn-success" >Send</button>
+                <button type="submit" class="col-sm-12 col-md-5 btn btn-success" >Send</button>
               </div>
             </div>
           </div>
