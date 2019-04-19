@@ -4,4 +4,6 @@ export class User{
     username    : string;
     pw          : string;
     email       : string;
+    question    : string;
+    answer      : string;
 }

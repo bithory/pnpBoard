@@ -21,6 +21,13 @@ export class ToolsService {
     return arr;
   }
   
+  /**
+   * baut ein Objekt zu einem URL - Array um (ist egal ob es ein einfaches oder komplexes Objekt ist)
+   * 
+   * @param obj    
+   * @param basicData 
+   * @param deep 
+   */
   public objectToURLStr(obj : Object, basicData : string, deep : number = 0) : string{
  
     let data      : string = basicData;

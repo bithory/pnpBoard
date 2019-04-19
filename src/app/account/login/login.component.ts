@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { User} from '../../models/user';
 import {NgForm} from '@angular/forms';
+
+import { HttpService } from '../services/http.service'
+
+import { User} from '../../models/user';
+import { Login } from '../../models/login';
 
 //mockData
 import {MockUsers} from '../../mockupData/mockUsers';
@@ -12,14 +16,21 @@ import {MockUsers} from '../../mockupData/mockUsers';
 })
 export class LoginComponent implements OnInit {
 
-  defaultUsr : User = {
+  public defaultUsr : User = {
     id        : 0,
     username  : '',
     pw        : '',
     email     : '',
+    question  : '',
+    answer    : '',
   }
 
   usr : User;
+
+  public login : Login = {
+    status  : true,
+    token   : '',
+  };
 
   userList  = MockUsers;
 
@@ -27,23 +38,47 @@ export class LoginComponent implements OnInit {
   loginDialogClass  : string = 'hidden';
   loginDialogText   : string = '';
 
-  constructor() { }
+  constructor(private http : HttpService) { }
 
   ngOnInit() {
+
   }
 
   public onSubmit(f: NgForm){
 
-    this.findUser(f.value.usrname, f.value.pw);
+    let usr : User = {
+      username  : f.value.usrname,
+      pw        : f.value.pw,
+      email     : '',
+      id        : 0,
+      question  : '',
+      answer    : '',
+    }
 
-    if(this.usr.id > 0){
+    
+    this.http.loginUser(usr).subscribe(x =>{
+
+      this.login.token  = x.token;
+      this.login.status = x.status;
+      
+      console.log('x.token');
+      console.log(x.token);
+
+      window.localStorage.setItem('token', x.token);
+    } );
+
+      
+    if(this.login.status){
       
       this.inpBorder        = '';
       this.loginDialogClass = '';
       this.loginDialogText  = '';
       //TODO: do something (go to next page) and delete console.log()
+      console.log(this.login);
       console.log('login successfull');
-      console.log(this.usr);
+      console.log(window.localStorage.getItem('token'));
+
+      // localStorage.removeItem('token');
     }
     else{
 
@@ -54,41 +89,6 @@ export class LoginComponent implements OnInit {
       //TODO:  remove console.log
       console.log('login NOT successfull');
     }
-  }
 
-  /**
-   * This function search after a user which login data are matching with the inputed
-   * login data
-   * 
-   * @param usr : string    | the username
-   * @param pw  : string    | the password
-   */
-  private findUser(usr : string, pw : string) : void{
-    
-    let usrData : User    = this.defaultUsr;
-    let isUsr   : boolean = false;
-
-    //TODO: replace with: get dataset from backend
-    this.userList.forEach(function(value, index){
-
-      if(usr === value.username && value.username.localeCompare(usr) == 0){
-
-        if(pw === value.pw && value.pw.localeCompare(pw) == 0){
-          
-          isUsr   = true;
-          usrData = value;
-          return;
-        }
-      }
-    });
-
-    if(isUsr){
-
-      this.usr = usrData;
-    }
-    else{
-      
-      this.usr = this.defaultUsr;
-    }
   }
 }
