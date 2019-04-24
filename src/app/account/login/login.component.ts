@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {NgForm} from '@angular/forms';
 
 import { HttpService } from '../services/http.service'
+import { AccountService } from '../../account/services/account/account.service'
 
 import { User} from '../../models/user';
 import { Login } from '../../models/login';
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
   loginDialogClass  : string = 'hidden';
   loginDialogText   : string = '';
 
-  constructor(private http : HttpService) { }
+  constructor(private http : HttpService, private acc : AccountService) { }
 
   ngOnInit() {
 
@@ -61,10 +62,11 @@ export class LoginComponent implements OnInit {
       this.login.token  = x.token;
       this.login.status = x.status;
       
+      this.acc.login(x.token);
+
       console.log('x.token');
       console.log(x.token);
 
-      window.localStorage.setItem('token', x.token);
     } );
 
       

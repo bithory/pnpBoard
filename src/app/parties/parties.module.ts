@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IndexComponent } from './index/index.component';
 import { EditComponent } from './edit/edit.component';
+import { AuthGuard } from '../auth.guard';
 
 const routes: Routes = [
   {path: '', component: IndexComponent},

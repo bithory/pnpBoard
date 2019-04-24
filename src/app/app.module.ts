@@ -14,6 +14,7 @@ import {IndexComponent} from './worlds/index/index.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NavbarHorizontalComponent } from './navigation/navbar-horizontal/navbar-horizontal.component';
+import { AuthGuard } from './auth.guard';
 
 const routes : Routes = [
   {path: '', component: IndexComponent},
@@ -32,7 +33,7 @@ const routes : Routes = [
     HttpClientModule,
     QuillModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
