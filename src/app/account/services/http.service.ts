@@ -4,6 +4,7 @@ import { ToolsService } from '../../services/tools.service';
 
 import { User } from '../../models/user';
 import { Login } from '../../models/login';
+import { Status } from '../../models/status';
 
 @Injectable({
   providedIn: 'root'
@@ -34,11 +35,11 @@ export class HttpService {
     return this.http.get<boolean>(this.url + this.module + action + data);
   }
 
-  public signinUser(id : number){
+  public logout(token : string){
 
-    let action  : string = this.action + 'signin';
-    let data    : string = this.param + '[id]=' + id;
+    let action  : string = this.action + 'logout';
+    let data    : string = this.param + '[token]=' + token;
 
-    return this.http.get<User>(this.url + this.module + action + data);
+    return this.http.get<Status>(this.url + this.module + action + data);
   }
 }

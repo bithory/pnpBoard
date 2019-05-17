@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
       question  : '',
       answer    : '',
     }
-
     
     this.http.loginUser(usr).subscribe(x =>{
 
@@ -63,10 +62,6 @@ export class LoginComponent implements OnInit {
       this.login.status = x.status;
       
       this.acc.login(x.token);
-
-      console.log('x.token');
-      console.log(x.token);
-
     } );
 
       
@@ -75,21 +70,12 @@ export class LoginComponent implements OnInit {
       this.inpBorder        = '';
       this.loginDialogClass = '';
       this.loginDialogText  = '';
-      //TODO: do something (go to next page) and delete console.log()
-      console.log(this.login);
-      console.log('login successfull');
-      console.log(window.localStorage.getItem('token'));
-
-      // localStorage.removeItem('token');
     }
     else{
 
       this.inpBorder        = 'border border-danger';
       this.loginDialogClass = 'pt-4';
       this.loginDialogText  = 'Wrong username or password!';
-
-      //TODO:  remove console.log
-      console.log('login NOT successfull');
     }
 
   }
