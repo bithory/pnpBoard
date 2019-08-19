@@ -17,9 +17,9 @@ export class HttpService {
   constructor(private http : HttpClient) { }
 
 
-  public getNavigation(partyId : number){
+  public getNavigation(token : string){
 
-    let data    : string = this.data + '[id]=' + partyId;
+    let data    : string = this.data + '[token]=' + token;
     this.action += 'index';
 
     return this.http.get<Navigation[]>(this.url + this.module + this.action + data);

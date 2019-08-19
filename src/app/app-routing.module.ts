@@ -30,12 +30,12 @@ const routes: Routes = [
   },
   { 
     path: '', 
-    loadChildren : './account/account.module#AccountModule', 
+    loadChildren : './default/default.module#DefaultModule', 
   },
 ];
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  // imports: [RouterModule.forRoot(routes,{enableTracing:true, useHash: true})], //dev
+  imports: [RouterModule.forRoot(routes)], //no dev
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -7,7 +7,7 @@ export class Navigation{
     party       : [
         {
             partyId     : number;
-            partyName  : string;
+            partyName   : string;
         }
     ]    
 }

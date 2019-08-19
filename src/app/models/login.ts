@@ -1,5 +1,6 @@
 export class Login{
 
-    token   : string;
-    status  : boolean;
+    token       : string;
+    status      : boolean;
+    timestamp   : number;
 };

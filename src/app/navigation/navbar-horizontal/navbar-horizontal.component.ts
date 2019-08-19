@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../services/http.service';
+import { Router } from '@angular/router'
 
 import { AccountService } from '../../account/services/account/account.service';
 
 import { Navigation } from '../../models/navigation';
 import { Login } from '../../models/login'
-import { access } from 'fs';
+// import { access } from 'fs';
 
 @Component({
   selector: 'app-navbar-horizontal',
@@ -15,32 +16,38 @@ import { access } from 'fs';
 })
 export class NavbarHorizontalComponent implements OnInit {
 
-  private userId : number = 1;
+  // private userId : number = 1;
   
   public navItems : Array<Navigation> = [];
-  public login    : Login = {
-    status  : false,
-    token   : '',
+  public loginData    : Login = {
+    status    : false,
+    token     : '',
+    timestamp : 0,
   }
 
-  constructor(private http : HttpService, private acc : AccountService) { }
+  constructor(private http : HttpService, private acc : AccountService, private router : Router) { }
 
   ngOnInit() {
+
+    this.acc.loginObs$.subscribe(x => {
+
+      // this.loginData = x;
+      console.log('-----------------');
+      console.log(x);
+      console.log(this.loginData);
+      this.getData();
+    });
 
     this.getData();
   }
 
-  private getData(){
+  public getData(){
 
-    this.login = this.acc.checkLogin();
+    this.loginData = this.acc.checkLogin();
 
-    this.http.getNavigation(this.userId).subscribe(data => this.navItems = data);
-    
-    console.log(this.navItems);
-  }
+    // console.log(this.loginData);
 
-  public logout(){
-
-    this.acc.logout();
+    if(this.loginData.status)
+      this.http.getNavigation(this.loginData.token).subscribe(data => this.navItems = data);
   }
 }

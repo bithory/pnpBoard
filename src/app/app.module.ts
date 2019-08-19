@@ -11,7 +11,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {WorldsModule} from './worlds/worlds.module';
 import {IndexComponent} from './worlds/index/index.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from './account/services/token-interceptor/token-interceptor.service';
 
 import { NavbarHorizontalComponent } from './navigation/navbar-horizontal/navbar-horizontal.component';
 import { AuthGuard } from './auth.guard';
@@ -33,7 +34,13 @@ const routes : Routes = [
     HttpClientModule,
     QuillModule,
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, 
+    {
+    provide : HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true,
+  }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

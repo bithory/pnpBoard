@@ -9,15 +9,18 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="">Home</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Management
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="./parties">Parties</a>
-          <a class="dropdown-item" routerLink="./worlds">Worlds</a>
-        </div>
-      </li>
+      <li *ngIf="!loginData.status; else management"></li>
+      <ng-template #management>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Management
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="./parties">Parties</a>
+            <a class="dropdown-item" routerLink="./worlds">Worlds</a>
+          </div>
+        </li>
+      </ng-template>
       <li class="nav-item dropdown" *ngFor="let item of navItems">
         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{item.short}}
@@ -27,7 +30,7 @@
               <span class="dropdown-item no-hover"><b>{{party.partyName}}</b></span>
               <a class="dropdown-item" routerLink="./notes/{{party.partyId}}">Notes</a>
               <a class="dropdown-item" href="#">Characters</a>
-              <a class="dropdown-item" href="./tags/{{party.partyId}}">Tags</a>
+              <a class="dropdown-item" routerLink="./tags/{{party.partyId}}">Tags</a>
           </div>
           <div class="dropdown-divider"></div>
           <span class="dropdown-item text-muted no-hover">{{item.name}}</span>
@@ -36,11 +39,17 @@
     </ul>
     <div class="form-inline my-2 my-lg-0">
       <ul class="navbar-nav mr-auto">
+          <li *ngIf="!loginData.status; else profile"></li>
+          <ng-template #profile>            
+            <li class="nav-item active">
+              <a href="#" class="nav-link">Profile</a>
+            </li>
+          </ng-template>
         <li class="nav-item active">
-          <a href="#" class="nav-link">Profile</a>
-        </li>
-        <li class="nav-item active">
-          <a href="#" class="nav-link" (click)="logout()">Logout</a>
+          <a routerLink="./account/login" class="nav-link" *ngIf="!loginData.status; else logout">Login</a>
+          <ng-template #logout>            
+          <a routerLink="./account/logout" class="nav-link">Logout</a>
+          </ng-template>
         </li>
       </ul>
     </div>

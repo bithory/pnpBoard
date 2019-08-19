@@ -25,12 +25,15 @@ export class AuthGuard implements CanActivate {
 
     let login : Login = this.acc.checkLogin();
     
-    console.log(login);
-
     if(!login.status)
       this.router.navigate(['/account/login']);
 
     return login.status;
+  }
+
+  noProtection() : boolean{
+
+    return true;
   }
   
 }

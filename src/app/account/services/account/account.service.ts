@@ -4,7 +4,11 @@ import { Router } from '@angular/router';
 import { HttpService } from '../http.service'
 
 import { Login } from '../../../models/login'
-import { timeout } from 'q';
+
+import { NavbarHorizontalComponent } from '../../../navigation/navbar-horizontal/navbar-horizontal.component'
+import { Subject } from 'rxjs';
+
+// import { timeout } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -12,34 +16,60 @@ import { timeout } from 'q';
 export class AccountService {
 
   private loginStatus : Login = {
-    status  : false,
-    token   : '',
+
+    status    : false,
+    token     : '',
+    timestamp : 0,
   };
+
+  private loginStat = new Subject<boolean>();
+  public  loginObs$ = this.loginStat.asObservable();
 
   private counter = 0;
 
   constructor(private http : HttpService, private router : Router) { }
 
-  public login(token : string){
+  public navReload(log : boolean){
+
+    this.loginStat.next(log);
+  }
+
+  public login(token : string, timestamp : number){
 
     window.localStorage.setItem('token', token);
+    window.localStorage.setItem('timestamp', '' + timestamp);
 
-    setTimeout(function(){
-
-      console.log(this.counter++);
-    }, 1000);
+    this.navReload(true);
   }
 
   public checkLogin() : Login {
 
-    let token : string = localStorage.getItem('token');
+    let token  = localStorage.getItem('token');
 
     if(token != undefined){
+
       this.loginStatus.status = true;
       this.loginStatus.token  = token;
     }
 
     return this.loginStatus;
+  }
+
+  public checkTimeOutdate(){
+
+    let maxTime : number  = 30 * 60; //<chosen number> * <minute factor>
+    let tmp     : number  = Date.now() / 1000;
+
+    let timestamp : number  = Number(localStorage.getItem('timestamp'));
+    let actTime   : number  = parseInt("" + tmp, 10);
+
+    // console.log('timest:  ' + (timestamp + maxTime));
+    // console.log('actTime: ' + actTime);
+
+    if((timestamp + maxTime) < actTime && !Number.isNaN(timestamp) && timestamp != 0){
+      
+      this.logout();
+    }
   }
 
   public getToken() : string{
@@ -53,19 +83,23 @@ export class AccountService {
   public logout() : void{
 
     let token : string = window.localStorage.getItem('token');
-    let link  : string = '';
+    let link  : string = './account/login';
     let status = {
+
       status  : false,
       msg     : '',
     }
 
     this.http.logout(token).subscribe(x => {
 
-      status = x;
+      // status = x;
 
       if(x.status == true){
 
         window.localStorage.removeItem('token');
+        window.localStorage.removeItem('timestamp');
+
+        this.navReload(false);
 
         this.router.navigate([link]);
       }

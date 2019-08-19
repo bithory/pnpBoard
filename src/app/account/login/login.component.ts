@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {NgForm} from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { HttpService } from '../services/http.service'
 import { AccountService } from '../../account/services/account/account.service'
@@ -29,8 +30,9 @@ export class LoginComponent implements OnInit {
   usr : User;
 
   public login : Login = {
-    status  : true,
-    token   : '',
+    status    : true,
+    token     : '',
+    timestamp : 0,
   };
 
   userList  = MockUsers;
@@ -39,14 +41,18 @@ export class LoginComponent implements OnInit {
   loginDialogClass  : string = 'hidden';
   loginDialogText   : string = '';
 
-  constructor(private http : HttpService, private acc : AccountService) { }
+  constructor(
+    private http    : HttpService, 
+    private acc     : AccountService,
+    private router  : Router
+  ) { }
 
   ngOnInit() {
 
   }
 
   public onSubmit(f: NgForm){
-
+    
     let usr : User = {
       username  : f.value.usrname,
       pw        : f.value.pw,
@@ -58,18 +64,32 @@ export class LoginComponent implements OnInit {
     
     this.http.loginUser(usr).subscribe(x =>{
 
-      this.login.token  = x.token;
-      this.login.status = x.status;
+      if(x.status){
+        
+        this.login.token      = x.token;
+        this.login.status     = x.status;
+        this.login.timestamp  = x.timestamp;
+        
+        this.acc.login(x.token, x.timestamp);
+
+      }
       
-      this.acc.login(x.token);
+      this.showLoginReport(x.status);
     } );
 
-      
-    if(this.login.status){
+     
+
+  }
+
+  private showLoginReport(status : boolean){
+
+    if(status){
       
       this.inpBorder        = '';
       this.loginDialogClass = '';
       this.loginDialogText  = '';
+
+      this.router.navigate(['./worlds']);
     }
     else{
 
@@ -77,6 +97,5 @@ export class LoginComponent implements OnInit {
       this.loginDialogClass = 'pt-4';
       this.loginDialogText  = 'Wrong username or password!';
     }
-
   }
 }
