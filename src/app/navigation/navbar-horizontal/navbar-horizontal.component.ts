@@ -31,10 +31,6 @@ export class NavbarHorizontalComponent implements OnInit {
 
     this.acc.loginObs$.subscribe(x => {
 
-      // this.loginData = x;
-      console.log('-----------------');
-      console.log(x);
-      console.log(this.loginData);
       this.getData();
     });
 
@@ -48,6 +44,13 @@ export class NavbarHorizontalComponent implements OnInit {
     // console.log(this.loginData);
 
     if(this.loginData.status)
-      this.http.getNavigation(this.loginData.token).subscribe(data => this.navItems = data);
+      this.http.getNavigation(this.loginData.token).subscribe(data => {
+
+        this.navItems = data;
+        
+        //to communicate to the template that the application is loged out
+        if(data == null)
+          this.loginData.status = false;
+      });
   }
 }

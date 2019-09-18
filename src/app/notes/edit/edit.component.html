@@ -26,10 +26,13 @@
             <div class="col-sm-2"></div>
           </div>
           <div class="row py-2 text-left">
-            <div class="col-sm-12">
+            <div class="col-sm-12" *ngIf="mode == 'edit'; else viewText">
               <label for="party-text" class="col-sm-1 pl-0">Text</label>
               <quill-editor id="party-text" name="text" [(ngModel)]="note.text"  [modules]="quillConfig"></quill-editor>
             </div>
+            <ng-template #viewText>
+                <div [innerHTML]="note.text"></div>>
+            </ng-template>
           </div>
           <div class="row py-4"></div>
           <div class="row py-5">

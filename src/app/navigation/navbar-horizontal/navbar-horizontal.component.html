@@ -39,7 +39,9 @@
     </ul>
     <div class="form-inline my-2 my-lg-0">
       <ul class="navbar-nav mr-auto">
-          <li *ngIf="!loginData.status; else profile"></li>
+          <li class="nav-item active" *ngIf="!loginData.status; else profile">
+            <a routerLink="./account/registration" class="nav-link">Registration</a>
+          </li>
           <ng-template #profile>            
             <li class="nav-item active">
               <a href="#" class="nav-link">Profile</a>

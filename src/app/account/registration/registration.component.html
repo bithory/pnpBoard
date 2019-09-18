@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="container">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+          <div class="row text-left">
+            <div class="col-sm-5 form-row">
+              <label for="username" class="col-sm-4 pl-0 align-top {{errorLabel['username']}}">Username*</label>
+              <input id="username" class="col-sm-8 form-control {{errorInp['username']}}" name="username" [(ngModel)]="user.username">
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5 form-row">
+              <label for="email" class="col-sm-4 pl-0 {{errorLabel['email']}}" >Email*</label>
+              <input id="email" type="text" class="col-sm-8 form-control no-block {{errorInp['email']}}" name="email" [(ngModel)]="user.email" email>
+            </div>
+          </div>
+          <div class="row py-2 text-left">
+            <div class="col-sm-5 form-row">
+              <label for="pw" class="col-sm-4 pl-0 {{errorLabel['pw']}}" >Password*</label>
+              <input id="pw" type="password" class="col-sm-8 form-control no-block {{errorInp['pw']}}" name="pw" [(ngModel)]="user.pw">
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5 form-row">
+              <label for="confirm-pw" class="col-sm-4 pl-0 {{errorLabel['pwConfirm']}}" >Confirm password*</label>
+              <input id="confirm-pw" type="password" class="col-sm-8 form-control no-block {{errorInp['pwConfirm']}}" name="pwConfirm" [(ngModel)]="pwConfirm">
+            </div>
+          </div>
+          <div class="row py-2 text-left">
+            <div class="col-sm-5 form-row">
+              <label for="sec-quest" class="col-sm-4 pl-0 {{errorLabel['question']}}" >Security Question*</label>
+              <input id="sec-quest" type="text" class="col-sm-8 form-control no-block {{errorInp['question']}}" name="question" [(ngModel)]="user.question">
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5 form-row">
+              <label for="sec-answer" class="col-sm-4 pl-0 {{errorLabel['answer']}}" >Answer*</label>
+              <input id="sec-answer" type="text" class="col-sm-8 form-control no-block {{errorInp['answer']}}" name="answer" [(ngModel)]="user.answer">
+            </div>
+          </div>
+          <div class="row py-4"></div>
+          <div class="row py-5">
+            <div class="col-sm-12 pb-3">
+              <button type="submit" class="btn btn-success mr-1 {{hidden}}" [disabled]="isActField"> Send</button>
+              <!-- <button type="button" routerLink="../../../../{{partyId}}" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,7 +17,7 @@ export class EditComponent implements OnInit {
 
   private userId  : number = 1;
   private noteId  : number;
-  public partyId : number;
+  public partyId  : number;
 
   public notes  : Array<Note>;
   public tags   : Array<Tag>;
@@ -34,6 +34,8 @@ export class EditComponent implements OnInit {
   public editor : string = '';
   public editorTest : string = '';
 
+  public mode : string;
+
   quillConfig={
     toolbar: true,
   }
@@ -42,9 +44,9 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
 
-    this.noteId             = parseInt(this.route.snapshot.paramMap.get('id'));
-    let mode      : string  = this.route.snapshot.paramMap.get('mode');
-    this.partyId            = parseInt(this.route.snapshot.paramMap.get('partyId'));
+    this.noteId   = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.mode     = this.route.snapshot.paramMap.get('mode');
+    this.partyId  = parseInt(this.route.snapshot.paramMap.get('partyId'));
     
     let partyId             = this.partyId;
     
@@ -64,11 +66,11 @@ export class EditComponent implements OnInit {
       date    : '',
     };
 
-    if(mode !== 'new'){
+    if(this.mode !== 'new'){
 
       this.getData();
 
-      if(mode === 'view'){
+      if(this.mode === 'view'){
 
         this.isActField = true;
         this.hidden     = 'd-none';

@@ -29,10 +29,10 @@ export class HttpService {
 
   public registerUser(user : User){
 
-    let action  : string = this.action + 'add';
+    let action  : string = this.action + 'register';
     let data    : string = this.tools.objectToURLStr(user, this.param);
 
-    return this.http.get<boolean>(this.url + this.module + action + data);
+    return this.http.get<Status>(this.url + this.module + action + data);
   }
 
   public logout(token : string){
