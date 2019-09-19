@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToolsService } from '../../services/tools.service';
+import { AccountService } from '../../account/services/account/account.service';
 
 import { Note } from '../../models/note';
 import { User } from '../../models/user';
@@ -14,49 +15,56 @@ export class HttpService {
   private url     : string = 'http://localhost/pnpboardbackend/index.php';
   private module  : string = '?module=notes';
   private action  : string = '&action=';
+  private token   : string = '&data[token]=';
   private param   : string = '&data';
 
-  constructor(private http : HttpClient, private tools : ToolsService) { }
+  constructor(private http : HttpClient, private tools : ToolsService, private acc : AccountService) {   }
 
-  public getIndex(partyId : number, userId : number){
+  public getIndex(partyId : number){
 
     let action  : string = this.action + 'index';
-    let data    : string = this.param + '[partyId]=' + partyId;
-    data += this.param + '[userId]=' + userId;
+    let data    : string = this.param + '[partyId]=' + partyId;    
+    let token   : string = this.token + this.acc.getToken();
 
-    return this.http.get<Note[]>(this.url + this.module + action + data);
+    // data += this.param + '[userId]=' + userId;
+
+    return this.http.get<Note[]>(this.url + this.module + action + data + token);
   }
 
   public getNote(id : number){
 
     let action  : string = this.action + 'load';
-    let data    : string = this.param + '[id]='  + id;
+    let data    : string = this.param + '[id]='  + id;   
+    let token   : string = this.token + this.acc.getToken();
 
-    return this.http.get<Note>(this.url + this.module + action + data);
+    return this.http.get<Note>(this.url + this.module + action + data + token);
   }
 
   public editNote(note : Note){
 
     let action  : string = this.action + 'edit';
-    let data    : string = this.tools.objectToURLStr(note, this.param);
+    let data    : string = this.tools.objectToURLStr(note, this.param);   
+    let token   : string = this.token + this.acc.getToken();
 
-    return this.http.get<boolean>(this.url + this.module + action + data);
+    return this.http.get<boolean>(this.url + this.module + action + data + token);
   }
 
   public addNote(note : Note){
 
     let action  : string = this.action + 'add';
-    let data    : string = this.tools.objectToURLStr(note, this.param);
+    let data    : string = this.tools.objectToURLStr(note, this.param);   
+    let token   : string = this.token + this.acc.getToken();
 
-    return this.http.get<boolean>(this.url + this.module + action + data);
+    return this.http.get<boolean>(this.url + this.module + action + data + token);
   }
 
   public deleteNote(id : number){
 
     let action  : string = this.action + 'delete';
-    let data    : string = this.param + '[id]=' + id;
+    let data    : string = this.param + '[id]=' + id;   
+    let token   : string = this.token + this.acc.getToken();
 
-    return this.http.get<boolean>(this.url + this.module + action + data);
+    return this.http.get<boolean>(this.url + this.module + action + data + token);
   }
 
   //Templates ###########################################################################
@@ -65,16 +73,18 @@ export class HttpService {
   public getParyUsersList(partyId : number){
 
     let action  : string = this.action + 'usersList';
-    let data    : string = this.param + '[partyId]=' + partyId;
+    let data    : string = this.param + '[partyId]=' + partyId;   
+    let token   : string = 'data[token]=' + this.acc.getToken();
 
-    return this.http.get<Array<User>>(this.url + this.module + action + data);
+    return this.http.get<Array<User>>(this.url + this.module + action + data + token);
   }
 
   public getNotesTagsList(partyId : number){
 
     let action  : string  = this.action + 'tagsList';
-    let data    : string  = this.param + '[partyId]=' + partyId;
+    let data    : string  = this.param + '[partyId]=' + partyId;   
+    let token   : string = 'data[token]=' + this.acc.getToken();
 
-    return this.http.get<Tag[]>(this.url + this.module + action + data);
+    return this.http.get<Tag[]>(this.url + this.module + action + data + token);
   }
 }
