@@ -74,7 +74,7 @@ export class HttpService {
 
     let action  : string = this.action + 'usersList';
     let data    : string = this.param + '[partyId]=' + partyId;   
-    let token   : string = 'data[token]=' + this.acc.getToken();
+    let token   : string = this.token + this.acc.getToken();
 
     return this.http.get<Array<User>>(this.url + this.module + action + data + token);
   }
@@ -83,7 +83,7 @@ export class HttpService {
 
     let action  : string  = this.action + 'tagsList';
     let data    : string  = this.param + '[partyId]=' + partyId;   
-    let token   : string = 'data[token]=' + this.acc.getToken();
+    let token   : string  = this.token + this.acc.getToken();
 
     return this.http.get<Tag[]>(this.url + this.module + action + data + token);
   }
