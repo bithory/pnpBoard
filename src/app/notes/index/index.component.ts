@@ -16,19 +16,15 @@ import { MockNotes } from '../../mockupData/mockNotes';
 })
 export class IndexComponent implements OnInit {
 
-  
-  //TODO: set to dynamical getting id
-  private id      : number = 1;
   public partyId  : number;
-  // private userId  : number = 1;
 
   public notes  : Array<Note>;
   public tags   : Array<Tag>;
 
   constructor(private route : ActivatedRoute, private tools : ToolsService, private http : HttpService) {
 
-    //Um darauf zu reagieren wenn man von Gruppe a Notes zu Gruppe b Notes springt
-    //da sonst Index nicht neu angelegt wird
+    //reaction for jumping from party a to party b notes
+    //without index whouldn't be loaded
     route.params.subscribe(val => {
       
       this.notes = [];
