@@ -1,4 +1,9 @@
 <div class="container pb-5">
+  <div class="row mb-4">
+    <div class="col-sm-12 text-left">
+      <h2>{{title}}</h2>
+    </div>
+  </div>
   <div class="row">
     <div class="col-sm-12 bg-light shadow-sm text-left">
       <button [routerLink]="['../edit', 'new', partyId, 0]" class="btn btn-primary my-2"><i class="fas fa-plus"></i> New</button>
@@ -24,10 +29,17 @@
     <div class="col-sm-2 text-left">
       {{note.date}}
     </div>
-    <div class="col-sm-2 text-left">
+    <div class="col-sm-2 text-left" *ngIf="note.author; else noAuth">
+        <button type="button" [routerLink]="['/notes/edit', 'edit', note.partyId, note.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
       <button type="button" [routerLink]="['/notes/view', 'view', note.partyId, note.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
-      <button type="button" [routerLink]="['/notes/edit', 'edit', note.partyId, note.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
       <button type="button" (click)="delete(note.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
     </div>
+    <ng-template #noAuth>      
+      <div class="col-sm-2 text-left">
+          <button type="button" class="btn btn-secondary mr-2 invisible" ><i class="fas fa-pencil-alt"></i></button>
+          <button type="button" [routerLink]="['/notes/view', 'view', note.partyId, note.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
+          <button type="button" (click)="delete(note.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
+      </div>
+    </ng-template>
   </div>
 </div>

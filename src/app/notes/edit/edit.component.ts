@@ -55,16 +55,7 @@ export class EditComponent implements OnInit {
 
     this.getTemplates();
 
-    this.note = {
-      id      : 0,
-      name    : '',
-      text    : '',
-      userId  : this.userId,
-      partyId : this.partyId,
-      read    : [],
-      tags    : [],
-      date    : '',
-    };
+    this.note = new Note();
 
     if(this.mode !== 'new'){
 
@@ -126,10 +117,6 @@ export class EditComponent implements OnInit {
   }
 
   private onSubmit(f : NgForm){
-
-    // console.log(f);
-    //f.value.members
-    //f.value.noteTags    
 
     let users     : Array<User> = this.users;
     let readArr   : Array<User> = [];

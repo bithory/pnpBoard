@@ -20,8 +20,11 @@ export class IndexComponent implements OnInit {
 
   public notes  : Array<Note>;
   public tags   : Array<Tag>;
+  public title  : string;
 
   constructor(private route : ActivatedRoute, private tools : ToolsService, private http : HttpService) {
+
+    this.title = 'Notes';
 
     //reaction for jumping from party a to party b notes
     //without index whouldn't be loaded
