@@ -6,7 +6,17 @@
   </div>
   <div class="row">
     <div class="col-sm-12 bg-light shadow-sm text-left">
-      <button [routerLink]="['../edit', 'new', partyId, 0]" class="btn btn-primary my-2"><i class="fas fa-plus"></i> New</button>
+        <div class="float-right mt-2">
+            <div class="input-group mb-2">
+              <input type="text" class="form-control search-bar" id="inlineFormInputGroup" name="fSearch" [(ngModel)]="search" (keypress)="filterEnter($event)" placeholder="Search name and tags (for example: note1, tag2, ...)">
+              <div class="input-group-append">
+                <button class="input-group-text" (click)="searchElem()"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+        </div>
+      <div class="mr-auto">
+          <button [routerLink]="['../edit', 'new', partyId, 0]" class="btn btn-primary my-2"><i class="fas fa-plus"></i> New</button>
+      </div>
     </div>
   </div>
 </div>

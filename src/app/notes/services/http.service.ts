@@ -67,6 +67,15 @@ export class HttpService {
     return this.http.get<boolean>(this.url + this.module + action + data + token);
   }
 
+  public searchNotes(search : string, partyId : number){
+
+    let action  : string = this.action + 'search';
+    let data    : string = this.param + '[search]=' + search + this.param + '[id]=' + partyId;
+    let token   : string = this.token + this.acc.getToken();
+
+    return this.http.get<Note[]>(this.url + this.module + action + data + token);
+  }
+
   //Templates ###########################################################################
   //Die User und die Tags die der Party zugehörig sind
 

@@ -22,6 +22,8 @@ export class IndexComponent implements OnInit {
   public tags   : Array<Tag>;
   public title  : string;
 
+  public search : string;
+
   constructor(private route : ActivatedRoute, private tools : ToolsService, private http : HttpService) {
 
     this.title = 'Notes';
@@ -51,4 +53,17 @@ export class IndexComponent implements OnInit {
     })
   }
 
+  public filterEnter(key){
+
+    if(key.code == "Enter")
+      this.searchElem();
+  }
+
+  public searchElem(){
+
+    if(this.search.length == 0)
+      this.getData();
+    else
+      this.http.searchNotes(this.search, this.partyId).subscribe(x => this.notes = x);
+  }
 }
