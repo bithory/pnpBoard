@@ -33,7 +33,12 @@ export class TokenInterceptorService implements HttpInterceptor {
     // console.log(cloned);
     // let authService = this.injector.get(AuthGuard);
 
-    this.acc.checkTimeOutdate();    
+    console.log(cloned.url.indexOf('module=account&action=logout'));
+
+    if(cloned.url.indexOf('module=account&action=logout') == -1){
+      
+      this.acc.checkTimeOutdate();    
+    }
 
     return next.handle(cloned);
   }
