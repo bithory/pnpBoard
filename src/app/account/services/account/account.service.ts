@@ -57,8 +57,7 @@ export class AccountService {
 
   public checkTimeOutdate(){
 
-    // let maxTime : number  = 30 * 60; //<chosen time> * <minute factor>
-    let maxTime : number  = 10; //<chosen time> * <minute factor>
+    let maxTime : number  = 30 * 60; //<chosen time> * <minute factor>
     let tmp     : number  = Date.now() / 1000;
 
     let timestamp : number  = Number(localStorage.getItem('timestamp'));
