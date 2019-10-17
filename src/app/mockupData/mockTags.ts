@@ -1,5 +1,6 @@
 import { Tag } from '../models/tag';
 
+//test data for the tags
 export const MockTags : Array<Tag> = [
     {
         id      : 1,
