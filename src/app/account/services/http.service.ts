@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToolsService } from '../../services/tools.service';
 
+import { BackendData } from '../../backendData'
+
 import { User } from '../../models/user';
 import { Login } from '../../models/login';
 import { Status } from '../../models/status';
@@ -11,13 +13,17 @@ import { Status } from '../../models/status';
 })
 export class HttpService {
 
-  private url     = 'http://localhost/pnpboardbackend/index.php';
+  private url;
   private module  = '?module=account';
   private action  = '&action=';
   private token   = '&data[token]=1';
   private param   = '&data';
 
-  constructor(private http : HttpClient, private tools : ToolsService) { }
+  constructor(private http : HttpClient, private tools : ToolsService) {
+
+    let data = new BackendData();
+    this.url = data.domain;
+   }
 
   public loginUser(user : User){
 

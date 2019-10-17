@@ -63,9 +63,6 @@ export class AccountService {
     let timestamp : number  = Number(localStorage.getItem('timestamp'));
     let actTime   : number  = parseInt("" + tmp, 10);
 
-    // console.log('timest:  ' + (timestamp + maxTime));
-    // console.log('actTime: ' + actTime);
-
     if((timestamp + maxTime) < actTime && !Number.isNaN(timestamp) && timestamp != 0){
       
       this.logout();

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ToolsService } from '../../services/tools.service';
 import { AccountService } from '../../account/services/account/account.service';
 
+import { BackendData } from '../../backendData';
+
 import { Note } from '../../models/note';
 import { User } from '../../models/user';
 import { Tag } from '../../models/tag';
@@ -12,13 +14,17 @@ import { Tag } from '../../models/tag';
 })
 export class HttpService {
   
-  private url     : string = 'http://localhost/pnpboardbackend/index.php';
+  private url     : string;
   private module  : string = '?module=notes';
   private action  : string = '&action=';
   private token   : string = '&data[token]=';
   private param   : string = '&data';
 
-  constructor(private http : HttpClient, private tools : ToolsService, private acc : AccountService) {   }
+  constructor(private http : HttpClient, private tools : ToolsService, private acc : AccountService) { 
+
+    let data = new BackendData();
+    this.url = data.domain;
+  }
 
   public getIndex(partyId : number){
 

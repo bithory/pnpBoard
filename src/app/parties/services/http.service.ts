@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToolsService } from '../../services/tools.service';
 
+import { BackendData } from '../../backendData';
+
 import { Party } from '../../models/party';
 import { User } from '../../models/user';
 import { World} from '../../models/world';
@@ -13,12 +15,16 @@ import { Sheet } from '../../models/sheet';
 })
 export class HttpService {
 
-  private url     = 'http://localhost/pnpboardbackend/index.php';
+  private url;
   private module  = '?module=parties';
   private action  = '&action=';
   private param   = '&data';
 
-  constructor(private http : HttpClient, private tools : ToolsService) { }
+  constructor(private http : HttpClient, private tools : ToolsService) {
+
+    let data = new BackendData();
+    this.url = data.domain;
+   }
 
   public getIndex(){
 

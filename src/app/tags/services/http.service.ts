@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToolsService } from '../../services/tools.service';
 
+import { BackendData } from '../../backendData';
+
 import { Tag } from '../../models/tag';
 
 @Injectable({
@@ -10,12 +12,16 @@ import { Tag } from '../../models/tag';
 export class HttpService {
 
   
-  private url     = 'http://localhost/pnpboardbackend/index.php';
+  private url;
   private module  = '?module=tags';
   private action  = '&action=';
   private param   = '&data';
 
-  constructor(private http : HttpClient, private tools : ToolsService) { }
+  constructor(private http : HttpClient, private tools : ToolsService) {
+
+    let data = new BackendData();
+    this.url = data.domain;
+   }
 
   public getIndex(id : number){
 

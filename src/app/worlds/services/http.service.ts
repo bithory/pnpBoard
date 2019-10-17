@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { BackendData } from '../../backendData';
+
 import { User } from '../../models/user';
 import { World } from '../../models/world';
 
@@ -12,29 +14,16 @@ import { ToolsService } from '../../services/tools.service';
 })
 export class HttpService {
 
-  private url         : string = 'http://localhost:80/pnpboardbackend/index.php';
+  private url         : string;
   private module      : string = '?module=worlds';
   private action      : string = '&action=';
   private data        : string = '&data';
 
-  constructor(private http : HttpClient, private tools : ToolsService) { }
+  constructor(private http : HttpClient, private tools : ToolsService) {
 
-  // private objectToURLStr(obj : Object) : string{
- 
-  //   let data  : string = this.data;
-  //   let param : string = '';
-
-  //   let arr = Object.keys(obj).map(function(key) {
-  //     return [String(key), obj[key]];
-  //   });
-
-  //   arr.forEach(function(value){
-
-  //     param += data + '[' + value[0] + ']=' + encodeURIComponent(value[1]);
-  //   });
-
-  //   return param;
-  // }
+    let data = new BackendData();
+    this.url = data.domain;
+   }
 
   public getWorldList(){
     
