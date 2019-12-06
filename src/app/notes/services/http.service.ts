@@ -29,7 +29,7 @@ export class HttpService {
   public getIndex(partyId : number){
 
     let action  : string = this.action + 'index';
-    let data    : string = this.param + '[partyId]=' + partyId;    
+    let data    : string = this.param + '[partyId]=' + partyId;
     let token   : string = this.token + this.acc.getToken();
 
     // data += this.param + '[userId]=' + userId;

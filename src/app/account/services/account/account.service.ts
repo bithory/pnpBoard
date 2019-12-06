@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
-import { HttpService } from '../http.service'
+// import { HttpService } from '../http.service'
+import { BackendData } from '../../../backendData'
 
-import { Login } from '../../../models/login'
+import { Login } from '../../../models/login';
+import { Status } from '../../../models/status';
 
 import { NavbarHorizontalComponent } from '../../../navigation/navbar-horizontal/navbar-horizontal.component'
 import { Subject } from 'rxjs';
@@ -27,7 +30,7 @@ export class AccountService {
 
   private counter = 0;
 
-  constructor(private http : HttpService, private router : Router) { }
+  constructor(private http : HttpClient, private router : Router) { }
 
   public navReload(log : boolean){
 
@@ -89,7 +92,7 @@ export class AccountService {
 
     if(localStorage.getItem('timestamp') != null){
       
-      this.http.logout(token).subscribe(x => {
+      this.sendLogout(token).subscribe(x => {
 
         // status = x;
 
@@ -102,5 +105,17 @@ export class AccountService {
         }
       });
     }
+  }
+  
+  public sendLogout(param : string){
+
+    let urlModule : string = '?module=account';
+    let action    : string = '&action=logout';
+    let token     : string = '&data[token]=' + this.getToken();
+
+    let data : BackendData  = new BackendData();
+    let url  : string       = data.domain;
+
+    return this.http.get<Status>(url + urlModule + action + token);
   }
 }
