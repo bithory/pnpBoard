@@ -12,22 +12,26 @@
       <div class="col-sm-3 text-left"><b>World</b></div>
       <div class="col-sm-2 text-left"><b>Options</b></div>
     </div>
-    <div class="row border-bottom py-1" *ngFor="let party of parties">
-      <div class="col-sm-3 text-left">
-        {{party.name}}
-      </div>
-      <div class="col-sm-4 text-left">
-        <span  class="badge badge-secondary mr-1" *ngFor="let user of party.users">
-          {{user.username}}
-        </span>
-      </div>
-      <div class="col-sm-3 text-left">
-        {{party.world.name}}
-      </div>
-      <div class="col-sm-2 text-left">
-        <button type="button" [routerLink]="['/parties/view', 'view', party.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
-        <button type="button" [routerLink]="['/parties/edit', 'edit', party.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-        <button type="button" (click)="delete(party.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
-      </div>
-    </div>
+    <ng-container *ngIf="parties != null">
+        <div class="row border-bottom py-1" *ngFor="let party of parties">
+          <div class="col-sm-3 text-left">
+            {{party.name}}
+          </div>
+          <div class="col-sm-4 text-left">
+            <ng-container *ngIf="party.users != null">
+              <span  class="badge badge-secondary mr-1" *ngFor="let user of party.users">
+                {{user.username}}
+              </span>
+            </ng-container>
+          </div>
+          <div class="col-sm-3 text-left">
+            {{party.world.name}}
+          </div>
+          <div class="col-sm-2 text-left">
+            <button type="button" [routerLink]="['/parties/view', 'view', party.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
+            <button type="button" [routerLink]="['/parties/edit', 'edit', party.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+            <button type="button" (click)="delete(party.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
+          </div>
+        </div>
+    </ng-container>
   </div>

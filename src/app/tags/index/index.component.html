@@ -10,14 +10,16 @@
     <div class="col-sm-10 text-left"><b>Name</b></div>
     <div class="col-sm-2 text-left"><b>Options</b></div>
   </div>
-  <div class="row border-bottom py-1" *ngFor="let tag of tags">
-    <div class="col-sm-10 text-left">
-      {{tag.name}}
-    </div>
-    <div class="col-sm-2 text-left">
-      <button type="button" [routerLink]="['/tags/view', 'view', partyId, tag.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
-      <button type="button" [routerLink]="['/tags/edit', 'edit', partyId, tag.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-      <button type="button" (click)="delete(tag.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
-    </div>
-  </div>
+  <ng-container *ngIf="tags != null">
+      <div class="row border-bottom py-1" *ngFor="let tag of tags">
+        <div class="col-sm-10 text-left">
+          {{tag.name}}
+        </div>
+        <div class="col-sm-2 text-left">
+          <button type="button" [routerLink]="['/tags/view', 'view', partyId, tag.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
+          <button type="button" [routerLink]="['/tags/edit', 'edit', partyId, tag.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+          <button type="button" (click)="delete(tag.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
+        </div>
+      </div>
+  </ng-container>
 </div>

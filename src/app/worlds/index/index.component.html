@@ -12,20 +12,22 @@
     <div class="col-sm-2 text-left"><b>Edition</b></div>
     <div class="col-sm-4 text-left"><b>Options</b></div>
   </div>
-  <div class="row border-bottom py-1" *ngFor="let item of worldList">
-    <div class="col-sm-3 text-left">
-      {{item.name}}
+  <ng-container *ngIf="worldList != null">
+    <div class="row border-bottom py-1" *ngFor="let item of worldList">
+      <div class="col-sm-3 text-left">
+        {{item.name}}
+      </div>
+      <div class="col-sm-2 text-left">
+        {{item.short}}
+      </div>
+      <div class="col-sm-2 text-left">
+        {{item.edition}}
+      </div>
+      <div class="col-sm-4 text-left">
+        <button type="button" routerLink="./view/{{item.id}}" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
+        <button type="button" routerLink="./edit/{{item.id}}" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+        <button type="button" (click)="delete(item.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
+      </div>
     </div>
-    <div class="col-sm-2 text-left">
-      {{item.short}}
-    </div>
-    <div class="col-sm-2 text-left">
-      {{item.edition}}
-    </div>
-    <div class="col-sm-4 text-left">
-      <button type="button" routerLink="./view/{{item.id}}" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
-      <button type="button" routerLink="./edit/{{item.id}}" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-      <button type="button" (click)="delete(item.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
-    </div>
-  </div>
+  </ng-container>
 </div>

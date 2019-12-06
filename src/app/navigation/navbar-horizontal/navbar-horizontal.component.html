@@ -21,21 +21,25 @@
           </div>
         </li>
       </ng-template>
-      <li class="nav-item dropdown" *ngFor="let item of navItems">
-        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{item.short}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <div *ngFor="let party of item.party">
-              <span class="dropdown-item no-hover"><b>{{party.partyName}}</b></span>
-              <a class="dropdown-item" routerLink="./notes/{{party.partyId}}">Notes</a>
-              <a class="dropdown-item" href="#">Characters</a>
-              <a class="dropdown-item" routerLink="./tags/{{party.partyId}}">Tags</a>
+      <ng-container *ngIf="navItems != null">
+        <li class="nav-item dropdown" *ngFor="let item of navItems">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{item.short}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ng-container *ngIf="item.party != null">
+                <div *ngFor="let party of item.party">
+                    <span class="dropdown-item no-hover"><b>{{party.partyName}}</b></span>
+                    <a class="dropdown-item" routerLink="./notes/{{party.partyId}}">Notes</a>
+                    <a class="dropdown-item" href="#">Characters</a>
+                    <a class="dropdown-item" routerLink="./tags/{{party.partyId}}">Tags</a>
+                </div>
+            </ng-container>
+            <div class="dropdown-divider"></div>
+            <span class="dropdown-item text-muted no-hover">{{item.name}}</span>
           </div>
-          <div class="dropdown-divider"></div>
-          <span class="dropdown-item text-muted no-hover">{{item.name}}</span>
-        </div>
-      </li>
+        </li>
+      </ng-container>
     </ul>
     <div class="form-inline my-2 my-lg-0">
       <ul class="navbar-nav mr-auto">

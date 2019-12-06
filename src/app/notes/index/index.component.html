@@ -27,29 +27,33 @@
     <div class="col-sm-2 text-left"><b>Date</b></div>
     <div class="col-sm-2 text-left"><b>Options</b></div>
   </div>
-  <div class="row border-bottom py-1" *ngFor="let note of notes">
-    <div class="col-sm-3 text-left">
-      {{note.name}}
-    </div>
-    <div class="col-sm-5 text-left">
-      <span  class="badge badge-secondary mr-1" *ngFor="let tag of note.tags">
-        {{tag.name}}
-      </span>
-    </div>
-    <div class="col-sm-2 text-left">
-      {{note.date}}
-    </div>
-    <div class="col-sm-2 text-left" *ngIf="note.author; else noAuth">
-        <button type="button" [routerLink]="['/notes/edit', 'edit', note.partyId, note.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-      <button type="button" [routerLink]="['/notes/view', 'view', note.partyId, note.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
-      <button type="button" (click)="delete(note.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
-    </div>
-    <ng-template #noAuth>      
-      <div class="col-sm-2 text-left">
-          <button type="button" class="btn btn-secondary mr-2 invisible" ><i class="fas fa-pencil-alt"></i></button>
-          <button type="button" [routerLink]="['/notes/view', 'view', note.partyId, note.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
-          <button type="button" (click)="delete(note.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
+  <ng-container *ngIf="notes != null">
+    <div class="row border-bottom py-1" *ngFor="let note of notes">
+      <div class="col-sm-3 text-left">
+        {{note.name}}
       </div>
-    </ng-template>
-  </div>
+      <div class="col-sm-5 text-left">
+        <ng-container *ngIf="note.tags != null">
+            <span  class="badge badge-secondary mr-1" *ngFor="let tag of note.tags">
+              {{tag.name}}
+            </span>
+        </ng-container>
+      </div>
+      <div class="col-sm-2 text-left">
+        {{note.date}}
+      </div>
+      <div class="col-sm-2 text-left" *ngIf="note.author; else noAuth">
+          <button type="button" [routerLink]="['/notes/edit', 'edit', note.partyId, note.id]" class="btn btn-secondary mr-2" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+        <button type="button" [routerLink]="['/notes/view', 'view', note.partyId, note.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
+        <button type="button" (click)="delete(note.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
+      </div>
+      <ng-template #noAuth>      
+        <div class="col-sm-2 text-left">
+            <button type="button" class="btn btn-secondary mr-2 invisible" ><i class="fas fa-pencil-alt"></i></button>
+            <button type="button" [routerLink]="['/notes/view', 'view', note.partyId, note.id]" class="btn btn-secondary mr-2" title="View"><i class="far fa-eye"></i></button>
+            <button type="button" (click)="delete(note.id)" class="btn btn-danger" title="Delete"><i class="far fa-trash-alt"></i></button>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
 </div>

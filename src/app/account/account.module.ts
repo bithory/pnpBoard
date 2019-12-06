@@ -6,18 +6,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LogoutComponent } from './logout/logout.component';
 import { RegistrationComponent } from './registration/registration.component';
-// import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes : Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'registration', component: RegistrationComponent},
-  // {path: 'profile', component: ProfileComponent},
+  {path: 'profile', component: ProfileComponent},
 ];
 console.log('account module');
 @NgModule({
-  declarations: [LoginComponent, LogoutComponent, RegistrationComponent],
+  declarations: [LoginComponent, LogoutComponent, RegistrationComponent, ProfileComponent],
   imports: [
     CommonModule,
     FormsModule,
