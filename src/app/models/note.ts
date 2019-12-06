@@ -1,5 +1,5 @@
 import { Tag } from './tag';
-import { User } from './User';
+import { User } from './user';
 
 export class Note{
 
