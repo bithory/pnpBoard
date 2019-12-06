@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NavbarHorizontalComponent } from './navbar-horizontal/navbar-horizontal.component';
 
 @NgModule({
-  declarations: [NavbarHorizontalComponent],
+  // declarations: [NavbarHorizontalComponent],
+  declarations: [],
   imports: [
     CommonModule
   ]

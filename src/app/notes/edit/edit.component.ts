@@ -116,7 +116,7 @@ export class EditComponent implements OnInit {
     this.http.getNotesTagsList(this.partyId).subscribe(x => this.tags = x);
   }
 
-  private onSubmit(f : NgForm){
+  public onSubmit(f : NgForm){
 
     let users     : Array<User> = this.users;
     let readArr   : Array<User> = [];

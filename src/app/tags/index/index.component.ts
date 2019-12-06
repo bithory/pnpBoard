@@ -11,7 +11,7 @@ import { Tag } from '../../models/tag';
 })
 export class IndexComponent implements OnInit {
 
-  private partyId : number;
+  public partyId : number;
 
   public tags : Array<Tag>
 

@@ -40,17 +40,17 @@
     <div class="form-inline my-2 my-lg-0">
       <ul class="navbar-nav mr-auto">
           <li class="nav-item active" *ngIf="!loginData.status; else profile">
-            <a routerLink="./account/registration" class="nav-link">Registration</a>
+            <a routerLink="{{reg}}" class="nav-link">Registration</a>
           </li>
           <ng-template #profile>            
             <li class="nav-item active">
-              <a href="#" class="nav-link">Profile</a>
+              <a href="{{prof}}" class="nav-link">Profile</a>
             </li>
           </ng-template>
         <li class="nav-item active">
-          <a routerLink="./account/login" class="nav-link" *ngIf="!loginData.status; else logout">Login</a>
+          <a routerLink="{{log}}" class="nav-link" *ngIf="!loginData.status; else logout">Login</a>
           <ng-template #logout>            
-          <a routerLink="./account/logout" class="nav-link">Logout</a>
+          <a routerLink="{{logo}}" class="nav-link">Logout</a>
           </ng-template>
         </li>
       </ul>

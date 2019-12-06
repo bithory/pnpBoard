@@ -48,4 +48,9 @@ export class HttpService {
 
     return this.http.get<Status>(this.url + this.module + action + data);
   }
+
+  public getProfile(){
+    let action  : string = this.action + 'load';
+    let data    : string = this.param + '[token]=' + this.token;
+  }
 }

@@ -23,8 +23,8 @@ export class RegistrationComponent implements OnInit {
     email     : '',
   }
 
-  private errorLabel  : any = {};
-  private errorInp    : any = {};
+  public errorLabel  : any = {};
+  public errorInp    : any = {};
 
   public valid    : string = 'valid-feedback';
   public invalid  : string = 'invalid-feedback';
@@ -35,10 +35,13 @@ export class RegistrationComponent implements OnInit {
   public falsePw  : string = 'Your password and password confirmation aren\'t equal.'
   public errorMail: string = 'This is not a valid email.';
 
-  private errorMsgLabel : string = 'text-danger';
-  private errorMsgInp   : string = 'border border-danger';
-  private succMsgLabel  : string = '';
-  private succMsgInp    : string = '';
+  public errorMsgLabel : string = 'text-danger';
+  public errorMsgInp   : string = 'border border-danger';
+  public succMsgLabel  : string = '';
+  public succMsgInp    : string = '';
+
+  public hidden     : string = '';
+  public isActField : string = '';
 
   constructor(private acc : AccountService, private http : HttpService, private router : Router) { }
 
@@ -61,7 +64,7 @@ export class RegistrationComponent implements OnInit {
 
 
 
-  private onSubmit(f : NgForm){
+  public onSubmit(f : NgForm){
 
     let error         : boolean = false;
     let check         : boolean = false;

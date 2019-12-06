@@ -13,7 +13,7 @@ import { Tag } from '../../models/tag';
 export class EditComponent implements OnInit {
 
   private id      : number;
-  private partyId : number;
+  public partyId  : number;
   public tag      : Tag;
 
   public isActField : boolean;

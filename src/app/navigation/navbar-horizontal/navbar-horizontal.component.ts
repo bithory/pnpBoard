@@ -25,6 +25,12 @@ export class NavbarHorizontalComponent implements OnInit {
     timestamp : 0,
   }
 
+  private account ='./account/';
+  public reg  : string  = this.account + 'registration';
+  public log  : string  = this.account + 'login';
+  public logo : string  = this.account + 'logout';
+  public prof : string  = this.account + 'profile';
+
   constructor(private http : HttpService, private acc : AccountService, private router : Router) { }
 
   ngOnInit() {
